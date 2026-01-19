@@ -1,0 +1,245 @@
+package com.scouting.service;
+
+import com.scouting.data.model.Player;
+import com.scouting.data.repository.PlayerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
+import tech.tablesaw.api.Table;
+import tech.tablesaw.io.csv.CsvReadOptions;
+
+import java.io.IOException;
+
+@Service
+public class DataProcessingService {
+    
+    private static final Logger logger = LoggerFactory.getLogger(DataProcessingService.class);
+    private final PlayerRepository playerRepository;
+    
+    @Value("${app.csv.path}")
+    private Resource csvResource;
+    
+    public DataProcessingService(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
+    }
+    
+    @EventListener(ApplicationReadyEvent.class)
+    public void runPipeline() {
+        logger.info("=== Starting data processing pipeline ===");
+        
+        try {
+            var playerTable = loadCsvData();
+            logger.info("Loaded {} rows from CSV. Columns: {}", playerTable.rowCount(), playerTable.columnNames());
+            
+            playerRepository.deleteAll();
+            var savedCount = saveToDatabase(playerTable);
+            logger.info("Successfully saved {} players to database", savedCount);
+            
+        } catch (Exception e) {
+            logger.error("Error in data processing pipeline", e);
+            throw new RuntimeException("Failed to process player data", e);
+        }
+    }
+    
+    private Table loadCsvData() throws IOException {
+        var options = CsvReadOptions.builder(csvResource.getInputStream())
+                .header(true)
+                .separator(',')
+                .missingValueIndicator("", "NaN", "null")
+                .sample(false)
+                .build();
+        
+        var table = Table.read().csv(options);
+        if (table.rowCount() == 0) logger.error("CSV loaded but has 0 rows!");
+        return table;
+    }
+    
+    private int saveToDatabase(Table table) {
+        var count = 0;
+        var errors = 0;
+        
+        for (int i = 0; i < table.rowCount(); i++) {
+            try {
+                var player = new Player();
+
+             // Player Info
+                player.setName(getString(table, i, "Name"));
+                player.setAge(getInt(table, i, "Age"));
+                player.setNation(getString(table, i, "Nation"));
+                player.setPosition(getString(table, i, "Position"));
+                player.setSquad(getString(table, i, "Squad"));
+                player.setCompetition(getString(table, i, "Competition"));
+
+                // Playing Time
+                player.setMatches(getInt(table, i, "Matches"));
+                player.setStarts(getInt(table, i, "Starts"));
+                player.setMinutes(getInt(table, i, "Minutes"));
+                player.setNinetyS(getDouble(table, i, "90s"));
+
+                // Standard Stats
+                player.setGoals(getInt(table, i, "Goals"));
+                player.setAssists(getInt(table, i, "Assists"));
+                player.setgPlusA(getInt(table, i, "G+A"));
+                player.setNpg(getInt(table, i, "npG"));
+                player.setPkMade(getInt(table, i, "PK_Made"));
+                player.setPkAttempted(getInt(table, i, "PK_Attempted"));
+                player.setYellowCards(getInt(table, i, "Yellow_Cards"));
+                player.setRedCards(getInt(table, i, "Red_Cards"));
+
+                // Expected Goals (xG)
+                player.setXg(getDouble(table, i, "xG"));
+                player.setNpxg(getDouble(table, i, "npxG"));
+                player.setXag(getDouble(table, i, "xAG"));
+                player.setNpxgPlusXag(getDouble(table, i, "npxG+xAG"));
+                player.setXgPlusXag(getDouble(table, i, "xG+xAG"));
+
+                // Progression
+                player.setProgCarries(getInt(table, i, "Prog_Carries"));
+                player.setProgPasses(getInt(table, i, "Prog_Passes"));
+                player.setProgPassesReceived(getInt(table, i, "Prog_Passes_Received"));
+
+                // Shooting
+                player.setShots(getInt(table, i, "Shots"));
+                player.setSot(getInt(table, i, "SoT"));
+                player.setSotPercentage(getDouble(table, i, "SoT%"));
+                player.setgPerShots(getDouble(table, i, "G/Shots"));
+                player.setgPerSot(getDouble(table, i, "G/SoT"));
+                player.setAvgShotDist(getDouble(table, i, "Avg_Shot_Dist"));
+                player.setNpxgPerShots(getDouble(table, i, "npxG/Shots"));
+                player.setgMinusXg(getDouble(table, i, "G-xG"));
+                player.setNpgMinusXg(getDouble(table, i, "npG-xG"));
+
+                // Passing
+                player.setPassesCompleted(getInt(table, i, "Passes Completed"));
+                player.setPassesAttempted(getInt(table, i, "Passes_Attempted"));
+                player.setPassesPercentage(getDouble(table, i, "Passes%"));
+                player.setTotDistPasses(getDouble(table, i, "Tot_Dist_Passes"));
+                player.setTotDistPrgPasses(getDouble(table, i, "Tot_Dist_Prg_Passes"));
+                player.setKeyPasses(getInt(table, i, "Key_Passes"));
+                player.setPassesFinalThird(getInt(table, i, "Passes_Final_Third"));
+                player.setPassesPenArea(getInt(table, i, "Passes_Pen_Area"));
+                player.setCrossesPenArea(getInt(table, i, "Crosses_Pen_Area"));
+                player.setaMinusXag(getDouble(table, i, "A-xAG"));
+
+                // Dribbling & Possession
+                player.setTakeOnAttempted(getInt(table, i, "Take_On_Attempted"));
+                player.setTakeOnSucc(getInt(table, i, "Take_On_Succ"));
+                player.setTakeOnPercentage(getDouble(table, i, "Take_On%"));
+                player.setTouches(getInt(table, i, "Touches"));
+                player.setTouchesDefPen(getInt(table, i, "Touches_Def_Pen"));
+                player.setTouchesAttPen(getInt(table, i, "Touches_Att_Pen"));
+                player.setCarries(getInt(table, i, "Carries"));
+                player.setCarriesPenArea(getInt(table, i, "Carries_Pen_Area"));
+                player.setMiscontrols(getInt(table, i, "Miscontrols"));
+                player.setDispossessed(getInt(table, i, "Dispossessed"));
+                player.setPassesReceived(getInt(table, i, "Passes_Received"));
+
+                // Defensive Actions
+                player.setTackles(getInt(table, i, "Tackles"));
+                player.setTacklesWon(getInt(table, i, "Tackles_Won"));
+                player.setTacklesPercentage(getDouble(table, i, "Tackles%"));
+                player.setTacklesDef3rd(getInt(table, i, "Tackles_Def_3rd"));
+                player.setTacklesMid3rd(getInt(table, i, "Tackles_Mid_3rd"));
+                player.setTacklesAtt3rd(getInt(table, i, "Tackles_Att_3rd"));
+                player.setChallengesLost(getInt(table, i, "Challenges_Lost"));
+                player.setBlocks(getInt(table, i, "Blocks"));
+                player.setInterceptions(getInt(table, i, "Interceptions"));
+                player.setTklPlusInt(getInt(table, i, "Tkl+Int"));
+                player.setClearances(getInt(table, i, "Clearances"));
+                player.setErrorsLeadingShot(getInt(table, i, "Errors_Leading_Shot"));
+                player.setRecoveries(getInt(table, i, "Recoveries"));
+                player.setAerialWon(getInt(table, i, "Aerial_Won"));
+                player.setAerialWonPercentage(getDouble(table, i, "Aerial_Won%"));
+
+                // Miscellaneous
+                player.setCornerKicks(getInt(table, i, "Corner_Kicks"));
+                player.setCrosses(getInt(table, i, "Crosses"));
+                player.setOffsides(getInt(table, i, "Offsides"));
+                player.setSwitches(getInt(table, i, "Switches"));
+                player.setThroughBalls(getInt(table, i, "Through_Balls"));
+                player.setThrowIns(getInt(table, i, "Throw_Ins"));
+                player.setFouls(getInt(table, i, "Fouls"));
+                player.setFouled(getInt(table, i, "Fouled"));
+                player.setGca(getInt(table, i, "GCA"));
+                player.setSca(getInt(table, i, "SCA"));
+                player.setSecondYellow(getInt(table, i, "2nd_Yellow"));
+                player.setOwnGoal(getInt(table, i, "Own Goal"));
+                player.setPkConceded(getInt(table, i, "PK_conceded"));
+                player.setPkWon(getInt(table, i, "PK_won"));
+                
+                // Per 90 Minutes Stats
+                player.setGoalsP90(getDouble(table, i, "Goals_p90"));
+                player.setAssistsP90(getDouble(table, i, "Assists_p90"));
+                player.setgPlusAP90(getDouble(table, i, "G+A_p90"));
+                player.setNpgP90(getDouble(table, i, "npG_p90"));
+                player.setXgP90(getDouble(table, i, "xG_p90"));
+                player.setNpxgP90(getDouble(table, i, "npxG_p90"));
+                player.setXagP90(getDouble(table, i, "xAG_p90"));
+                player.setNpxgPlusXagP90(getDouble(table, i, "npxG+xAG_p90"));
+                player.setXgPlusXagP90(getDouble(table, i, "xG+xAG_p90"));
+                player.setShotsP90(getDouble(table, i, "Shots_p90"));
+                player.setSotP90(getDouble(table, i, "SoT_p90"));
+                player.setOffsidesP90(getDouble(table, i, "Offsides_p90"));
+                player.setFoulsP90(getDouble(table, i, "Fouls_p90"));
+                player.setFouledP90(getDouble(table, i, "Fouled_p90"));
+                player.setClearancesP90(getDouble(table, i, "Clearances_p90"));
+                player.setInterceptionsP90(getDouble(table, i, "Interceptions_p90"));
+                player.setTacklesP90(getDouble(table, i, "Tackles_p90"));
+                player.setTklPlusIntP90(getDouble(table, i, "Tkl+Int_p90"));
+                player.setTacklesWonP90(getDouble(table, i, "Tackles_Won_p90"));
+                player.setDispossessedP90(getDouble(table, i, "Dispossessed_p90"));
+                player.setMiscontrolsP90(getDouble(table, i, "Miscontrols_p90"));
+                player.setBlocksP90(getDouble(table, i, "Blocks_p90"));
+                player.setErrorsLeadingShotP90(getDouble(table, i, "Errors_Leading_Shot_p90"));
+                player.setRecoveriesP90(getDouble(table, i, "Recoveries_p90"));
+                player.setAerialWonP90(getDouble(table, i, "Aerial_Won_p90"));
+                player.setProgCarriesP90(getDouble(table, i, "Prog_Carries_p90"));
+                player.setProgPassesP90(getDouble(table, i, "Prog_Passes_p90"));
+                player.setProgPassesReceivedP90(getDouble(table, i, "Prog_Passes_Received_p90"));
+                player.setPassesAttemptedP90(getDouble(table, i, "Passes_Attempted_p90"));
+                player.setTakeOnAttemptedP90(getDouble(table, i, "Take_On_Attempted_p90"));
+                player.setPassesCompletedP90(getDouble(table, i, "Passes Completed_p90"));
+                player.setKeyPassesP90(getDouble(table, i, "Key_Passes_p90"));
+                player.setCrossesP90(getDouble(table, i, "Crosses_p90"));
+                player.setSwitchesP90(getDouble(table, i, "Switches_p90"));
+                player.setThroughBallsP90(getDouble(table, i, "Through_Balls_p90"));
+                player.setGcaP90(getDouble(table, i, "GCA_p90"));
+                player.setScaP90(getDouble(table, i, "SCA_p90"));
+                player.setTakeOnSuccP90(getDouble(table, i, "Take_On_Succ_p90"));
+                player.setTouchesP90(getDouble(table, i, "Touches_p90"));
+                player.setCarriesP90(getDouble(table, i, "Carries_p90"));
+                player.setPassesReceivedP90(getDouble(table, i, "Passes_Received_p90"));
+
+                playerRepository.save(player);
+                count++;
+
+            } catch (Exception e) {
+                if (++errors <= 5) {
+                    logger.error("Error saving player at row {}: {}", i, e.getMessage());
+                }
+            }
+        }
+        
+        if (errors > 0) logger.warn("Encountered {} errors while saving players", errors);
+        return count;
+    }
+    
+    private String getString(Table t, int r, String col) {
+        try { return t.stringColumn(col).isMissing(r) ? null : t.stringColumn(col).get(r); } 
+        catch (Exception e) { return null; }
+    }
+    
+    private Integer getInt(Table t, int r, String col) {
+        try { return t.intColumn(col).isMissing(r) ? null : t.intColumn(col).get(r); } 
+        catch (Exception e) { return null; }
+    }
+    
+    private Double getDouble(Table t, int r, String col) {
+        try { return t.doubleColumn(col).isMissing(r) ? null : t.doubleColumn(col).get(r); } 
+        catch (Exception e) { return null; }
+    }
+}
