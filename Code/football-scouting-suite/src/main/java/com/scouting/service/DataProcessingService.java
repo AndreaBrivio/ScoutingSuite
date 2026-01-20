@@ -238,17 +238,56 @@ public class DataProcessingService {
     }
     
     private String getString(Table t, int r, String col) {
-        try { return t.stringColumn(col).isMissing(r) ? null : t.stringColumn(col).get(r); } 
-        catch (Exception e) { return null; }
+        if (!t.columnNames().contains(col)) return null;
+        
+        try { 
+            return t.stringColumn(col).isMissing(r) ? null : t.stringColumn(col).get(r); 
+        } 
+        catch (Exception e) { 
+            try { return String.valueOf(t.column(col).get(r)); } catch (Exception ex) { return null; }
+        }
     }
     
     private Integer getInt(Table t, int r, String col) {
-        try { return t.intColumn(col).isMissing(r) ? null : t.intColumn(col).get(r); } 
-        catch (Exception e) { return null; }
+        if (!t.columnNames().contains(col)) return null;
+
+        if (t.column(col).type().name().equals("INTEGER")) {
+             return t.intColumn(col).isMissing(r) ? null : t.intColumn(col).get(r);
+        }
+
+        try {
+            String val = t.stringColumn(col).get(r);
+
+            if (val == null || val.trim().isEmpty() || val.equals("null") || val.equals("NaN")) {
+                return null;
+            }
+
+            return (int) Double.parseDouble(val);
+        } catch (Exception e) {
+            throw new RuntimeException("Dato non valido nella colonna " + col + ": " + e.getMessage());
+        }
     }
     
     private Double getDouble(Table t, int r, String col) {
-        try { return t.doubleColumn(col).isMissing(r) ? null : t.doubleColumn(col).get(r); } 
-        catch (Exception e) { return null; }
+        if (!t.columnNames().contains(col)) return null;
+
+        if (t.column(col).type().name().equals("DOUBLE")) {
+            return t.doubleColumn(col).isMissing(r) ? null : t.doubleColumn(col).get(r);
+        }
+        
+        if (t.column(col).type().name().equals("INTEGER")) {
+             Integer val = t.intColumn(col).get(r);
+             return val == null ? null : val.doubleValue();
+        }
+
+        try {
+            String val = t.stringColumn(col).get(r);
+            if (val == null || val.trim().isEmpty() || val.equals("null") || val.equals("NaN")) {
+                return null;
+            }
+            return Double.parseDouble(val);
+        } catch (Exception e) {
+             throw new RuntimeException("Dato non valido nella colonna " + col + ": " + e.getMessage());
+        }
     }
 }
