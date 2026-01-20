@@ -18,7 +18,6 @@ public class ScoutingService {
         this.playerRepository = playerRepository;
     }
     
-    // US-02: Fornire lista completa
     public List<Player> getAllPlayers() {
         return playerRepository.findAll();
     }

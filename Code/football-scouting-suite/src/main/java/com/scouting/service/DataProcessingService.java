@@ -70,14 +70,11 @@ public class DataProcessingService {
         List<Player> playersToSave = new ArrayList<>(); // Lista temporanea
         var errors = 0;
         
-        // Verifica nome colonna competizione
-        String compColumnName = table.columnNames().contains("Competition") ? "Competition" : "Comp";
-        
         for (int i = 0; i < table.rowCount(); i++) {
             try {
                 var player = new Player();
                 
-// Player Info
+                // Player Info
                 player.setName(getString(table, i, "Name"));
                 player.setAge(getInt(table, i, "Age"));
                 player.setNation(getString(table, i, "Nation"));
@@ -234,14 +231,12 @@ public class DataProcessingService {
             }
         }
         
-        // SALVATAGGIO IN BLOCCO (Molto più veloce)
         if (!playersToSave.isEmpty()) {
             playerRepository.saveAll(playersToSave);
             logger.info("Successfully saved {} players to database (BATCH MODE).", playersToSave.size());
         }
     }
     
-    // Metodi helper getString, getInt, getDouble rimangono uguali...
     private String getString(Table t, int r, String col) {
         try { return t.stringColumn(col).isMissing(r) ? null : t.stringColumn(col).get(r); } 
         catch (Exception e) { return null; }

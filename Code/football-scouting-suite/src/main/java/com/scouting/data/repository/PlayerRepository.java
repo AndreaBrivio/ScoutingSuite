@@ -11,6 +11,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Long> {
-    // Non sono più necessari metodi findByAge, findBySquad, etc.
-    // L'applicazione carica tutto in memoria nella Grid per US-02.
 }

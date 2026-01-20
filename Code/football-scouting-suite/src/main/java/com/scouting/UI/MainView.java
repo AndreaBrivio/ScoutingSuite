@@ -23,30 +23,24 @@ public class MainView extends VerticalLayout {
     private final Span recordCount;
     private final List<Player> allPlayers;
     
-    // US-03: Selettore colonne
     private MultiSelectComboBox<String> columnSelector;
     private Map<String, Runnable> columnConfigurations;
     
     public MainView(ScoutingService scoutingService) {
         this.scoutingService = scoutingService;
-        // US-01/02: Caricamento dati grezzi senza filtri
         this.allPlayers = scoutingService.getAllPlayers();
         
-        // 1. Configurazione Layout Principale
-        // Imposta l'altezza della vista al 100% della finestra del browser
         setSizeFull(); 
         setPadding(true);
         setSpacing(true);
         
         add(new H1("Football Player Scouting Suite (2025-26)"));
         
-        // 2. Configurazione Griglia
         grid = new Grid<>(Player.class, false);
-        grid.setSizeFull(); // La griglia deve occupare lo spazio assegnatole
+        grid.setSizeFull(); 
         
         initializeColumnConfigurations();
         
-        // Setup Toolbar (US-03)
         createToolbar();
         
         // Default View
@@ -56,18 +50,12 @@ public class MainView extends VerticalLayout {
         recordCount.getStyle().set("font-weight", "bold");
         updateRecordCount();
         
-        // 3. Aggiunta componenti al layout
         add(columnSelector, recordCount, grid);
         
-        // 4. FIX FONDAMENTALE PER LO SCROLL
-        // Dice al layout verticale di espandere la griglia per occupare 
-        // tutto lo spazio verticale rimanente sotto il titolo e i filtri.
         expand(grid); 
         
-        // Popola la griglia
         grid.setItems(allPlayers);
         
-        // Debug Log in console per verifica
         System.out.println("MainView inizializzata. Righe caricate: " + allPlayers.size());
     }
     
