@@ -1,7 +1,15 @@
-C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\src\main\java\com\scouting\data\repository\PlayerRepository.java
-C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\src\main\java\com\scouting\service\DataProcessingService.java
-C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\src\main\java\com\scouting\Application.java
-C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\src\main\java\com\scouting\service\ScoutingService.java
-C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\src\main\java\com\scouting\UI\MainView.java
-C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\src\main\java\com\scouting\data\model\Player.java
-C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\src\main\java\com\scouting\config\BrowserLauncher.java
+C:\Users\andre\OneDrive\Desktop\ScoutingSuite\Code\football-scouting-suite\src\main\java\com\scouting\service\specification\strategy\DoubleQueryStrategy.java
+C:\Users\andre\OneDrive\Desktop\ScoutingSuite\Code\football-scouting-suite\src\main\java\com\scouting\service\DataProcessingService.java
+C:\Users\andre\OneDrive\Desktop\ScoutingSuite\Code\football-scouting-suite\src\main\java\com\scouting\ui\FilterRowComponent.java
+C:\Users\andre\OneDrive\Desktop\ScoutingSuite\Code\football-scouting-suite\src\main\java\com\scouting\data\repository\PlayerRepository.java
+C:\Users\andre\OneDrive\Desktop\ScoutingSuite\Code\football-scouting-suite\src\main\java\com\scouting\ui\ScoutingController.java
+C:\Users\andre\OneDrive\Desktop\ScoutingSuite\Code\football-scouting-suite\src\main\java\com\scouting\service\PlayerFilterRequest.java
+C:\Users\andre\OneDrive\Desktop\ScoutingSuite\Code\football-scouting-suite\src\main\java\com\scouting\service\specification\strategy\StatQueryStrategy.java
+C:\Users\andre\OneDrive\Desktop\ScoutingSuite\Code\football-scouting-suite\src\main\java\com\scouting\service\specification\strategy\IntegerQueryStrategy.java
+C:\Users\andre\OneDrive\Desktop\ScoutingSuite\Code\football-scouting-suite\src\main\java\com\scouting\config\BrowserLauncher.java
+C:\Users\andre\OneDrive\Desktop\ScoutingSuite\Code\football-scouting-suite\src\main\java\com\scouting\ui\MainView.java
+C:\Users\andre\OneDrive\Desktop\ScoutingSuite\Code\football-scouting-suite\src\main\java\com\scouting\service\specification\PlayerSpecificationFactory.java
+C:\Users\andre\OneDrive\Desktop\ScoutingSuite\Code\football-scouting-suite\src\main\java\com\scouting\service\StatFilterCriteria.java
+C:\Users\andre\OneDrive\Desktop\ScoutingSuite\Code\football-scouting-suite\src\main\java\com\scouting\Application.java
+C:\Users\andre\OneDrive\Desktop\ScoutingSuite\Code\football-scouting-suite\src\main\java\com\scouting\service\ScoutingService.java
+C:\Users\andre\OneDrive\Desktop\ScoutingSuite\Code\football-scouting-suite\src\main\java\com\scouting\data\model\Player.java

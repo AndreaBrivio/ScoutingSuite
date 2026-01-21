@@ -1,0 +1,8 @@
+com.scouting
+com.scouting.config
+com.scouting.data.model
+com.scouting.data.repository
+com.scouting.service
+com.scouting.service.specification
+com.scouting.service.specification.strategy
+com.scouting.ui

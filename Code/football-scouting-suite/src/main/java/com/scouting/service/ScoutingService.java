@@ -6,19 +6,45 @@ package com.scouting.service;
 
 import com.scouting.data.model.Player;
 import com.scouting.data.repository.PlayerRepository;
+import com.scouting.service.specification.PlayerSpecificationFactory;
 import org.springframework.stereotype.Service;
 import java.util.List;
+
+/**
+ * Questo è il centro dell'applicazione, dove risiede la logica di dominio.
+ * Il suo compito principale è orchestrare le operazioni: riceve le richieste dal Controller, interroga il Repository
+ * per i dati grezzi e utilizza la Factory delle specifiche per i filtri avanzati.
+ * <p>
+ * Abbiamo spostato la logica di creazione delle query dinamiche (i vari "if" sulle statistiche) in una classe Factory separata.
+ * Questo refactoring è stato essenziale per ridurre la <em>Cognitive Complexity</em> segnalata da SonarQube,
+ * che indicava questo metodo come troppo difficile da mantenere se avesse contenuto tutta la logica di filtraggio.
+ * Ora il servizio è snello e rispetta il principio di singola responsabilità (SRP).
+ */
 
 @Service
 public class ScoutingService {
     
     private final PlayerRepository playerRepository;
-    
-    public ScoutingService(PlayerRepository playerRepository) {
+    private final PlayerSpecificationFactory specificationFactory;
+
+    public ScoutingService(PlayerRepository playerRepository, PlayerSpecificationFactory specificationFactory) {
         this.playerRepository = playerRepository;
+        this.specificationFactory = specificationFactory;
     }
     
     public List<Player> getAllPlayers() {
         return playerRepository.findAll();
     }
+    
+    public long getTotalPlayerCount() {
+        return playerRepository.count();
+    }
+    
+    public List<Player> findPlayersByCriteria(PlayerFilterRequest req) {
+        return playerRepository.findAll(specificationFactory.createSpecification(req));
+    }
 }
+
+    
+    
+    
