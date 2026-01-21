@@ -6,6 +6,23 @@ package com.scouting.service;
 
 import com.scouting.data.model.Player;
 import com.scouting.data.repository.PlayerRepository;
+
+// IMPORT PER LOG4J
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+// IMPORT PER JPA CRITERIA API (Risolvono Root, Path, ecc.)
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Path;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import com.scouting.data.repository.PlayerRepository;
 import com.scouting.service.StatFilterCriteria;
 
 import jakarta.persistence.criteria.Predicate;
@@ -20,6 +37,8 @@ import java.util.List;
 @Service
 public class ScoutingService {
     
+	private static final Logger logger = LogManager.getLogger(ScoutingService.class);
+	
     private final PlayerRepository playerRepository;
     
     public ScoutingService(PlayerRepository playerRepository) {
@@ -56,78 +75,103 @@ public class ScoutingService {
     }
     
     
-    public List<Player> findPlayersByCriteria(
-            Integer minAge, Integer maxAge,
-            String playerName, String squad, String comp, String nation, String position,
-            List<StatFilterCriteria> statFilters // <--- MODIFICA QUI: Accetta una lista
-        ) {
-            return playerRepository.findAll((Specification<Player>) (root, query, criteriaBuilder) -> {
-                List<Predicate> predicates = new ArrayList<>();
+    
+    
+ // Metodo aggiornato: accetta SOLO il request object
+    public List<Player> findPlayersByCriteria(PlayerFilterRequest req) {
+        return playerRepository.findAll((Specification<Player>) (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
 
-                // --- Filtri di base (Age, Name, Squad, ecc.) rimangono uguali ---
-                if (minAge != null) {
-                    predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("age"), minAge));
-                }
-                if (maxAge != null) {
-                    predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("age"), maxAge));
-                }
-                if (playerName != null && !playerName.isEmpty()) {
-                    predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + playerName.toLowerCase() + "%"));
-                }
-                if (squad != null && !squad.isEmpty()) {
-                    predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("squad")), "%" + squad.toLowerCase() + "%"));
-                }
-                if (comp != null) {
-                    predicates.add(criteriaBuilder.equal(root.get("competition"), comp));
-                }
-                if (nation != null) {
-                    predicates.add(criteriaBuilder.equal(root.get("nation"), nation));
-                }
-                if (position != null) {
-                    predicates.add(criteriaBuilder.equal(root.get("position"), position));
-                }
+            // Mappiamo i campi del DTO ai predicati JPA
+            if (req.minAge() != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("age"), req.minAge()));
+            }
+            if (req.maxAge() != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("age"), req.maxAge()));
+            }
+            if (req.name() != null && !req.name().isEmpty()) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + req.name().toLowerCase() + "%"));
+            }
+            if (req.squad() != null && !req.squad().isEmpty()) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("squad")), "%" + req.squad().toLowerCase() + "%"));
+            }
+            if (req.competition() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("competition"), req.competition()));
+            }
+            if (req.nation() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("nation"), req.nation()));
+            }
+            if (req.position() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("position"), req.position()));
+            }
 
-                // --- NUOVA LOGICA: Iterazione sui filtri statistici multipli ---
-                if (statFilters != null && !statFilters.isEmpty()) {
-                    for (StatFilterCriteria filter : statFilters) {
-                        String statName = filter.getStatName();
-                        Double minValue = filter.getMinValue();
-                        Double maxValue = filter.getMaxValue();
+            // Gestione filtri statistici (logica estratta dal record)
+            if (req.statFilters() != null && !req.statFilters().isEmpty()) {
+                for (StatFilterCriteria filter : req.statFilters()) {
+                    // ... (qui incolla la stessa logica di reflection che avevi prima) ...
+                    // Nota: useremo req.statFilters() invece della lista passata come parametro
+                    applyStatFilter(filter, root, criteriaBuilder, predicates); // Consiglio: estrai questo in un metodo privato per pulizia
+                }
+            }
 
-                        if (statName != null && !statName.isEmpty() && (minValue != null || maxValue != null)) {
-                            try {
-                                Field statField = Player.class.getDeclaredField(statName);
-                                Class<?> fieldType = statField.getType();
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        });
+    }
 
-                                if (Number.class.isAssignableFrom(fieldType)) {
-                                    if (minValue != null && maxValue != null) {
-                                        if (fieldType.equals(Integer.class)) {
-                                            predicates.add(criteriaBuilder.between(root.get(statName), minValue.intValue(), maxValue.intValue()));
-                                        } else {
-                                            predicates.add(criteriaBuilder.between(root.get(statName), minValue, maxValue));
-                                        }
-                                    } else if (minValue != null) {
-                                        if (fieldType.equals(Integer.class)) {
-                                            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(statName), minValue.intValue()));
-                                        } else {
-                                            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(statName), minValue));
-                                        }
-                                    } else if (maxValue != null) {
-                                         if (fieldType.equals(Integer.class)) {
-                                            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(statName), maxValue.intValue()));
-                                        } else {
-                                            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(statName), maxValue));
-                                        }
-                                    }
-                                }
-                            } catch (NoSuchFieldException e) {
-                                System.err.println("Campo statistica non trovato: " + statName);
-                            }
+    
+ 
+    private void applyStatFilter(StatFilterCriteria filter, Root<Player> root, CriteriaBuilder cb, List<Predicate> predicates) {
+        String statName = filter.getStatName();
+        Double minValue = filter.getMinValue();
+        Double maxValue = filter.getMaxValue();
+
+        if (statName != null && !statName.isEmpty() && (minValue != null || maxValue != null)) {
+            try {
+                Field statField = Player.class.getDeclaredField(statName);
+                Class<?> fieldType = statField.getType();
+
+                // Controlliamo se è un numero
+                if (Number.class.isAssignableFrom(fieldType) || fieldType.equals(int.class) || fieldType.equals(double.class)) {
+                    
+                    Path<Number> path = root.get(statName);
+                    boolean isInteger = fieldType.equals(Integer.class) || fieldType.equals(int.class);
+
+                    // CASO 1: Range (Min AND Max)
+                    if (minValue != null && maxValue != null) {
+                        if (isInteger) {
+                            predicates.add(cb.between(path.as(Integer.class), minValue.intValue(), maxValue.intValue()));
+                        } else {
+                            predicates.add(cb.between(path.as(Double.class), minValue, maxValue));
+                        }
+                    } 
+                    // CASO 2: Solo Minimo (>=)
+                    else if (minValue != null) {
+                        if (isInteger) {
+                            predicates.add(cb.greaterThanOrEqualTo(path.as(Integer.class), minValue.intValue()));
+                        } else {
+                            predicates.add(cb.greaterThanOrEqualTo(path.as(Double.class), minValue));
+                        }
+                    } 
+                    // CASO 3: Solo Massimo (<=)
+                    else if (maxValue != null) {
+                        if (isInteger) {
+                            predicates.add(cb.lessThanOrEqualTo(path.as(Integer.class), maxValue.intValue()));
+                        } else {
+                            predicates.add(cb.lessThanOrEqualTo(path.as(Double.class), maxValue));
                         }
                     }
                 }
-
-                return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-            });
+            } catch (NoSuchFieldException | SecurityException e) {
+                logger.warn("Campo statistica non trovato o inaccessibile: {}", statName);
+            } catch (Exception e) {
+                logger.error("Errore generico nel filtro statistico: {}", e.getMessage());
+            }
         }
+    }
+    
+    
 }
+
+    
+    
+    

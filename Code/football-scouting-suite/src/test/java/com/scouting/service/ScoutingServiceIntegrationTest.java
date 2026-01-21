@@ -44,13 +44,15 @@ class ScoutingServiceIntegrationTest {
     @Test
     void testFindPlayersByDynamicCriteria() {
         List<StatFilterCriteria> filters = new ArrayList<>();
-        
         filters.add(new StatFilterCriteria("goals", 10.0, 30.0));
 
-        List<Player> results = scoutingService.findPlayersByCriteria(
+        // FIX: Creiamo il DTO invece di passare null singoli
+        PlayerFilterRequest request = new PlayerFilterRequest(
             null, null, null, null, null, null, null, 
             filters
         );
+
+        List<Player> results = scoutingService.findPlayersByCriteria(request);
 
         Assertions.assertEquals(1, results.size());
         Assertions.assertEquals("High Scorer", results.get(0).getName());
@@ -59,14 +61,16 @@ class ScoutingServiceIntegrationTest {
     @Test
     void testFindPlayersByMultipleDynamicCriteria() {
         List<StatFilterCriteria> filters = new ArrayList<>();
-
         filters.add(new StatFilterCriteria("goals", 1.0, null));
         filters.add(new StatFilterCriteria("assists", null, 5.0));
 
-        List<Player> results = scoutingService.findPlayersByCriteria(
+        // FIX: Creiamo il DTO
+        PlayerFilterRequest request = new PlayerFilterRequest(
             null, null, null, null, null, null, null, 
             filters
         );
+
+        List<Player> results = scoutingService.findPlayersByCriteria(request);
 
         Assertions.assertEquals(1, results.size());
         Assertions.assertEquals("Low Scorer", results.get(0).getName());
@@ -75,13 +79,17 @@ class ScoutingServiceIntegrationTest {
     @Test
     void testReflectionErrorHandling() {
         List<StatFilterCriteria> filters = new ArrayList<>();
-
+        // Testiamo un campo che non esiste per verificare che non esploda
         filters.add(new StatFilterCriteria("campoInesistente", 10.0, 20.0));
 
-        List<Player> results = scoutingService.findPlayersByCriteria(
+        // FIX: Creiamo il DTO
+        PlayerFilterRequest request = new PlayerFilterRequest(
              null, null, null, null, null, null, null, filters
         );
         
+        List<Player> results = scoutingService.findPlayersByCriteria(request);
+        
+        // Deve ritornare tutti (2) perché il filtro invalido viene ignorato (loggato come warn)
         Assertions.assertEquals(2, results.size());
     }
 }

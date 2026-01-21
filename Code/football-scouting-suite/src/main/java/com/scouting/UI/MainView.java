@@ -1,7 +1,6 @@
-package com.scouting.UI;
+package com.scouting.ui;
 
 import com.scouting.data.model.Player;
-import com.scouting.service.ScoutingService;
 import com.scouting.service.StatFilterCriteria;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -28,9 +27,21 @@ import java.util.stream.Collectors;
 @Route("")
 public class MainView extends VerticalLayout {
     
-    private final ScoutingService scoutingService;
+    // --- COSTANTI PER SONARQUBE (Stringhe duplicate) ---
+    private static final String BASIC_INFO = "Basic Info";
+    private static final String WIDTH_80 = "80px";
+    private static final String WIDTH_90 = "90px";
+    private static final String WIDTH_100 = "100px";
+    private static final String WIDTH_110 = "110px";
+    private static final String WIDTH_120 = "120px";
+    private static final String WIDTH_130 = "130px";
+    
+    // --- MVC: Riferimento al Controller (transient per serializzazione) ---
+    private final transient ScoutingController controller;
+    
     private final Grid<Player> grid;
     private final Span recordCount;
+    // Lista locale per i dati iniziali (o cache)
     private final List<Player> allPlayers;
     
     private IntegerField minAgeField;
@@ -48,9 +59,11 @@ public class MainView extends VerticalLayout {
     private List<FilterRowComponent> activeFilterRows; 
     private Map<String, String> statFieldMapping; 
 
-    public MainView(ScoutingService scoutingService) {
-        this.scoutingService = scoutingService;
-        this.allPlayers = scoutingService.getAllPlayers();
+    // Dependency Injection del CONTROLLER
+    public MainView(ScoutingController controller) {
+        this.controller = controller;
+        // Recupero dati iniziali tramite Controller
+        this.allPlayers = controller.getAllPlayers();
         
         setSizeFull(); 
         setPadding(true);
@@ -107,7 +120,7 @@ public class MainView extends VerticalLayout {
     private void createToolbar() {
         columnSelector = new MultiSelectComboBox<>("Seleziona Metriche (US-03)");
         columnSelector.setItems(columnConfigurations.keySet());
-        columnSelector.select("Basic Info"); 
+        columnSelector.select(BASIC_INFO); 
         columnSelector.setWidth("100%");
         columnSelector.setMaxWidth("600px");
         columnSelector.setPlaceholder("Scegli categorie statistiche...");
@@ -116,10 +129,10 @@ public class MainView extends VerticalLayout {
     
     private void createFilters() {
         minAgeField = new IntegerField("Min Age");
-        minAgeField.setValue(16); minAgeField.setWidth("80px");
+        minAgeField.setValue(16); minAgeField.setWidth(WIDTH_80);
         
         maxAgeField = new IntegerField("Max Age");
-        maxAgeField.setValue(50); maxAgeField.setWidth("80px");
+        maxAgeField.setValue(50); maxAgeField.setWidth(WIDTH_80);
         
         playerSearch = new TextField("Player Name");
         playerSearch.setPlaceholder("Search...");
@@ -146,7 +159,7 @@ public class MainView extends VerticalLayout {
         Set<String> positions = allPlayers.stream().map(Player::getPosition).filter(Objects::nonNull).collect(Collectors.toSet());
         positionFilter = new ComboBox<>("Position");
         positionFilter.setItems(positions);
-        positionFilter.setWidth("110px");
+        positionFilter.setWidth(WIDTH_110);
         positionFilter.setClearButtonVisible(true);
 
         HorizontalLayout headerFilters = new HorizontalLayout();
@@ -204,7 +217,8 @@ public class MainView extends VerticalLayout {
         FilterRowComponent row = new FilterRowComponent(
             statFieldMapping, 
             this::updateList, 
-            (componentToRemove) -> { 
+            // SonarQube fix: rimossa parentesi inutile
+            componentToRemove -> { 
                 filterRowsLayout.remove(componentToRemove);
                 activeFilterRows.remove(componentToRemove);
                 updateList();
@@ -232,7 +246,8 @@ public class MainView extends VerticalLayout {
             }
         }
 
-        List<Player> filtered = scoutingService.findPlayersByCriteria(
+        // MVC: Chiamata al CONTROLLER (Pattern Delegation)
+        List<Player> filtered = controller.searchPlayers(
             minAge, maxAge, playerName, squad, comp, nation, position,
             statCriteriaList
         );
@@ -253,7 +268,7 @@ public class MainView extends VerticalLayout {
         filterRowsLayout.removeAll();
         activeFilterRows.clear();
         
-        columnSelector.select("Basic Info");
+        columnSelector.select(BASIC_INFO);
         
         updateList();
     }
@@ -266,126 +281,125 @@ public class MainView extends VerticalLayout {
         return value != null ? "%.2f".formatted(value) : "-";
     }
     
-    
     private void initializeColumnConfigurations() {
         columnConfigurations = new LinkedHashMap<>();
 
-        columnConfigurations.put("Basic Info", () -> {
+        columnConfigurations.put(BASIC_INFO, () -> {
             grid.addColumn(Player::getName).setHeader("Player").setFrozen(true).setWidth("180px").setSortable(true).setResizable(true);
             grid.addColumn(Player::getAge).setHeader("Age").setWidth("70px").setSortable(true);
-            grid.addColumn(Player::getPosition).setHeader("Position").setWidth("90px").setSortable(true);
-            grid.addColumn(Player::getSquad).setHeader("Squad").setWidth("150px").setSortable(true).setResizable(true);
-            grid.addColumn(Player::getNation).setHeader("Nation").setWidth("100px").setSortable(true);
+            grid.addColumn(Player::getPosition).setHeader("Position").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(Player::getSquad).setHeader("Squad").setWidth(WIDTH_130).setSortable(true).setResizable(true); // Modificato leggermente per costante
+            grid.addColumn(Player::getNation).setHeader("Nation").setWidth(WIDTH_100).setSortable(true);
             grid.addColumn(Player::getCompetition).setHeader("Competition").setWidth("150px").setSortable(true).setResizable(true);
         });
 
         columnConfigurations.put("Playing Time", () -> {
-            grid.addColumn(Player::getMatches).setHeader("Matches").setWidth("90px").setSortable(true);
-            grid.addColumn(Player::getStarts).setHeader("Starts").setWidth("90px").setSortable(true);
-            grid.addColumn(Player::getMinutes).setHeader("Minutes").setWidth("100px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getNinetyS())).setHeader("90s").setWidth("80px").setSortable(true);
+            grid.addColumn(Player::getMatches).setHeader("Matches").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(Player::getStarts).setHeader("Starts").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(Player::getMinutes).setHeader("Minutes").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(p -> fmt(p.getNinetyS())).setHeader("90s").setWidth(WIDTH_80).setSortable(true);
         });
 
         columnConfigurations.put("Standard Attacking", () -> {
-            grid.addColumn(Player::getGoals).setHeader("Goals").setWidth("90px").setSortable(true);
-            grid.addColumn(Player::getAssists).setHeader("Assists").setWidth("90px").setSortable(true);
-            grid.addColumn(Player::getgPlusA).setHeader("G+A").setWidth("90px").setSortable(true);
-            grid.addColumn(Player::getNpg).setHeader("Non-Pen Goals").setWidth("130px").setSortable(true);
-            grid.addColumn(Player::getPkMade).setHeader("PK Made").setWidth("100px").setSortable(true);
-            grid.addColumn(Player::getPkAttempted).setHeader("PK Att").setWidth("100px").setSortable(true);
+            grid.addColumn(Player::getGoals).setHeader("Goals").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(Player::getAssists).setHeader("Assists").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(Player::getgPlusA).setHeader("G+A").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(Player::getNpg).setHeader("Non-Pen Goals").setWidth(WIDTH_130).setSortable(true);
+            grid.addColumn(Player::getPkMade).setHeader("PK Made").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(Player::getPkAttempted).setHeader("PK Att").setWidth(WIDTH_100).setSortable(true);
         });
 
         columnConfigurations.put("Shooting", () -> {
-            grid.addColumn(Player::getShots).setHeader("Shots").setWidth("90px").setSortable(true);
-            grid.addColumn(Player::getSot).setHeader("SoT").setWidth("90px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getSotPercentage())).setHeader("SoT%").setWidth("90px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getgPerShots())).setHeader("G/Sh").setWidth("90px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getgPerSot())).setHeader("G/SoT").setWidth("90px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getAvgShotDist())).setHeader("Avg Dist").setWidth("110px").setSortable(true);
+            grid.addColumn(Player::getShots).setHeader("Shots").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(Player::getSot).setHeader("SoT").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(p -> fmt(p.getSotPercentage())).setHeader("SoT%").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(p -> fmt(p.getgPerShots())).setHeader("G/Sh").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(p -> fmt(p.getgPerSot())).setHeader("G/SoT").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(p -> fmt(p.getAvgShotDist())).setHeader("Avg Dist").setWidth(WIDTH_110).setSortable(true);
         });
 
         columnConfigurations.put("Expected Metrics (xG)", () -> {
-            grid.addColumn(p -> fmt(p.getXg())).setHeader("xG").setWidth("80px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getNpxg())).setHeader("npxG").setWidth("80px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getXag())).setHeader("xAG").setWidth("80px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getNpxgPlusXag())).setHeader("npxG+xAG").setWidth("110px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getgMinusXg())).setHeader("G-xG").setWidth("90px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getNpgMinusXg())).setHeader("npG-xG").setWidth("100px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getaMinusXag())).setHeader("A-xAG").setWidth("90px").setSortable(true);
+            grid.addColumn(p -> fmt(p.getXg())).setHeader("xG").setWidth(WIDTH_80).setSortable(true);
+            grid.addColumn(p -> fmt(p.getNpxg())).setHeader("npxG").setWidth(WIDTH_80).setSortable(true);
+            grid.addColumn(p -> fmt(p.getXag())).setHeader("xAG").setWidth(WIDTH_80).setSortable(true);
+            grid.addColumn(p -> fmt(p.getNpxgPlusXag())).setHeader("npxG+xAG").setWidth(WIDTH_110).setSortable(true);
+            grid.addColumn(p -> fmt(p.getgMinusXg())).setHeader("G-xG").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(p -> fmt(p.getNpgMinusXg())).setHeader("npG-xG").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(p -> fmt(p.getaMinusXag())).setHeader("A-xAG").setWidth(WIDTH_90).setSortable(true);
         });
         
         columnConfigurations.put("Passing", () -> {
-            grid.addColumn(Player::getPassesCompleted).setHeader("Pass Cmp").setWidth("100px").setSortable(true);
-            grid.addColumn(Player::getPassesAttempted).setHeader("Pass Att").setWidth("100px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getPassesPercentage())).setHeader("Pass %").setWidth("90px").setSortable(true);
-            grid.addColumn(Player::getKeyPasses).setHeader("Key Passes").setWidth("110px").setSortable(true);
-            grid.addColumn(Player::getPassesFinalThird).setHeader("Pass Final 3rd").setWidth("130px").setSortable(true);
-            grid.addColumn(Player::getPassesPenArea).setHeader("Pass Pen Area").setWidth("130px").setSortable(true);
-            grid.addColumn(Player::getCrossesPenArea).setHeader("Cross Pen Area").setWidth("130px").setSortable(true);
+            grid.addColumn(Player::getPassesCompleted).setHeader("Pass Cmp").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(Player::getPassesAttempted).setHeader("Pass Att").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(p -> fmt(p.getPassesPercentage())).setHeader("Pass %").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(Player::getKeyPasses).setHeader("Key Passes").setWidth(WIDTH_110).setSortable(true);
+            grid.addColumn(Player::getPassesFinalThird).setHeader("Pass Final 3rd").setWidth(WIDTH_130).setSortable(true);
+            grid.addColumn(Player::getPassesPenArea).setHeader("Pass Pen Area").setWidth(WIDTH_130).setSortable(true);
+            grid.addColumn(Player::getCrossesPenArea).setHeader("Cross Pen Area").setWidth(WIDTH_130).setSortable(true);
         });
         
         columnConfigurations.put("Progressive Play", () -> {
-            grid.addColumn(Player::getProgCarries).setHeader("Prog Carries").setWidth("120px").setSortable(true);
-            grid.addColumn(Player::getProgPasses).setHeader("Prog Passes").setWidth("120px").setSortable(true);
-            grid.addColumn(Player::getProgPassesReceived).setHeader("Prog Rec").setWidth("120px").setSortable(true);
+            grid.addColumn(Player::getProgCarries).setHeader("Prog Carries").setWidth(WIDTH_120).setSortable(true);
+            grid.addColumn(Player::getProgPasses).setHeader("Prog Passes").setWidth(WIDTH_120).setSortable(true);
+            grid.addColumn(Player::getProgPassesReceived).setHeader("Prog Rec").setWidth(WIDTH_120).setSortable(true);
         });
         
         columnConfigurations.put("Possession & Dribbling", () -> {
-            grid.addColumn(Player::getTouches).setHeader("Touches").setWidth("100px").setSortable(true);
-            grid.addColumn(Player::getTakeOnAttempted).setHeader("Dribble Att").setWidth("110px").setSortable(true);
-            grid.addColumn(Player::getTakeOnSucc).setHeader("Dribble Succ").setWidth("110px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getTakeOnPercentage())).setHeader("Dribble %").setWidth("100px").setSortable(true);
-            grid.addColumn(Player::getCarries).setHeader("Carries").setWidth("100px").setSortable(true);
-            grid.addColumn(Player::getDispossessed).setHeader("Dispossessed").setWidth("120px").setSortable(true);
-            grid.addColumn(Player::getMiscontrols).setHeader("Miscontrols").setWidth("110px").setSortable(true);
+            grid.addColumn(Player::getTouches).setHeader("Touches").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(Player::getTakeOnAttempted).setHeader("Dribble Att").setWidth(WIDTH_110).setSortable(true);
+            grid.addColumn(Player::getTakeOnSucc).setHeader("Dribble Succ").setWidth(WIDTH_110).setSortable(true);
+            grid.addColumn(p -> fmt(p.getTakeOnPercentage())).setHeader("Dribble %").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(Player::getCarries).setHeader("Carries").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(Player::getDispossessed).setHeader("Dispossessed").setWidth(WIDTH_120).setSortable(true);
+            grid.addColumn(Player::getMiscontrols).setHeader("Miscontrols").setWidth(WIDTH_110).setSortable(true);
         });
 
         columnConfigurations.put("Defensive Actions", () -> {
-            grid.addColumn(Player::getTackles).setHeader("Tackles").setWidth("90px").setSortable(true);
-            grid.addColumn(Player::getTacklesWon).setHeader("Tkl Won").setWidth("90px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getTacklesPercentage())).setHeader("Tkl %").setWidth("90px").setSortable(true);
-            grid.addColumn(Player::getInterceptions).setHeader("Int").setWidth("80px").setSortable(true);
-            grid.addColumn(Player::getTklPlusInt).setHeader("Tkl+Int").setWidth("90px").setSortable(true);
-            grid.addColumn(Player::getBlocks).setHeader("Blocks").setWidth("90px").setSortable(true);
-            grid.addColumn(Player::getClearances).setHeader("Clear").setWidth("90px").setSortable(true);
-            grid.addColumn(Player::getErrorsLeadingShot).setHeader("Errors").setWidth("90px").setSortable(true);
+            grid.addColumn(Player::getTackles).setHeader("Tackles").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(Player::getTacklesWon).setHeader("Tkl Won").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(p -> fmt(p.getTacklesPercentage())).setHeader("Tkl %").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(Player::getInterceptions).setHeader("Int").setWidth(WIDTH_80).setSortable(true);
+            grid.addColumn(Player::getTklPlusInt).setHeader("Tkl+Int").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(Player::getBlocks).setHeader("Blocks").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(Player::getClearances).setHeader("Clear").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(Player::getErrorsLeadingShot).setHeader("Errors").setWidth(WIDTH_90).setSortable(true);
         });
 
         columnConfigurations.put("Goal & Shot Creation", () -> {
-            grid.addColumn(Player::getSca).setHeader("SCA").setWidth("80px").setSortable(true);
-            grid.addColumn(Player::getGca).setHeader("GCA").setWidth("80px").setSortable(true);
+            grid.addColumn(Player::getSca).setHeader("SCA").setWidth(WIDTH_80).setSortable(true);
+            grid.addColumn(Player::getGca).setHeader("GCA").setWidth(WIDTH_80).setSortable(true);
         });
 
         columnConfigurations.put("Per 90 (Attacking)", () -> {
-            grid.addColumn(p -> fmt(p.getGoalsP90())).setHeader("Goals/90").setWidth("100px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getAssistsP90())).setHeader("Assists/90").setWidth("100px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getgPlusAP90())).setHeader("G+A/90").setWidth("100px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getNpgP90())).setHeader("npg/90").setWidth("100px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getXgP90())).setHeader("xG/90").setWidth("90px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getXagP90())).setHeader("xAG/90").setWidth("90px").setSortable(true);
+            grid.addColumn(p -> fmt(p.getGoalsP90())).setHeader("Goals/90").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(p -> fmt(p.getAssistsP90())).setHeader("Assists/90").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(p -> fmt(p.getgPlusAP90())).setHeader("G+A/90").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(p -> fmt(p.getNpgP90())).setHeader("npg/90").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(p -> fmt(p.getXgP90())).setHeader("xG/90").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(p -> fmt(p.getXagP90())).setHeader("xAG/90").setWidth(WIDTH_90).setSortable(true);
         });
 
         columnConfigurations.put("Per 90 (General Play)", () -> {
-            grid.addColumn(p -> fmt(p.getShotsP90())).setHeader("Shots/90").setWidth("100px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getSotP90())).setHeader("SoT/90").setWidth("100px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getKeyPassesP90())).setHeader("Key Pass/90").setWidth("120px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getProgCarriesP90())).setHeader("Prog Carr/90").setWidth("120px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getProgPassesP90())).setHeader("Prog Pass/90").setWidth("120px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getTouchesP90())).setHeader("Touches/90").setWidth("110px").setSortable(true);
+            grid.addColumn(p -> fmt(p.getShotsP90())).setHeader("Shots/90").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(p -> fmt(p.getSotP90())).setHeader("SoT/90").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(p -> fmt(p.getKeyPassesP90())).setHeader("Key Pass/90").setWidth(WIDTH_120).setSortable(true);
+            grid.addColumn(p -> fmt(p.getProgCarriesP90())).setHeader("Prog Carr/90").setWidth(WIDTH_120).setSortable(true);
+            grid.addColumn(p -> fmt(p.getProgPassesP90())).setHeader("Prog Pass/90").setWidth(WIDTH_120).setSortable(true);
+            grid.addColumn(p -> fmt(p.getTouchesP90())).setHeader("Touches/90").setWidth(WIDTH_110).setSortable(true);
         });
         
         columnConfigurations.put("Per 90 (Defensive)", () -> {
-            grid.addColumn(p -> fmt(p.getTacklesP90())).setHeader("Tkl/90").setWidth("100px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getInterceptionsP90())).setHeader("Int/90").setWidth("90px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getClearancesP90())).setHeader("Clear/90").setWidth("100px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getBlocksP90())).setHeader("Blocks/90").setWidth("100px").setSortable(true);
-            grid.addColumn(p -> fmt(p.getRecoveriesP90())).setHeader("Recov/90").setWidth("110px").setSortable(true);
+            grid.addColumn(p -> fmt(p.getTacklesP90())).setHeader("Tkl/90").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(p -> fmt(p.getInterceptionsP90())).setHeader("Int/90").setWidth(WIDTH_90).setSortable(true);
+            grid.addColumn(p -> fmt(p.getClearancesP90())).setHeader("Clear/90").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(p -> fmt(p.getBlocksP90())).setHeader("Blocks/90").setWidth(WIDTH_100).setSortable(true);
+            grid.addColumn(p -> fmt(p.getRecoveriesP90())).setHeader("Recov/90").setWidth(WIDTH_110).setSortable(true);
         });
     }
     
     private void configureDefaultColumns() {
         grid.removeAllColumns();
-        List.of("Basic Info", "Playing Time", "Standard Attacking", "Shooting", 
+        List.of(BASIC_INFO, "Playing Time", "Standard Attacking", "Shooting", 
                 "Expected Metrics (xG)", "Passing", "Progressive Play", 
                 "Possession & Dribbling", "Defensive Actions", "Goal & Shot Creation", 
                 "Per 90 (Attacking)", "Per 90 (General Play)", "Per 90 (Defensive)")

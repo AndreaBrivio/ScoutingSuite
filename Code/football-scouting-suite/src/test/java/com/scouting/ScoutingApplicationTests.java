@@ -1,7 +1,8 @@
 package com.scouting;
 
-import com.scouting.UI.MainView;
 import com.scouting.service.ScoutingService;
+import com.scouting.ui.MainView;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.scouting.UI;
+package com.scouting.ui;
 
 import com.scouting.service.StatFilterCriteria;
 import com.vaadin.flow.component.button.Button;
