@@ -8,20 +8,24 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.Arrays;
 import java.util.List;
-
 import static org.mockito.Mockito.when;
+
+/**
+ * Questo è un classico "Unit Test" isolato con Mockito.
+ * Qui testiamo la logica del Service *senza* coinvolgere il database reale. Usiamo un "Mock" (una finta implementazione / Stub)
+ * del Repository per simulare i dati.
+ * Vogliamo verificare che il Service faccia il suo lavoro (es. chiamare findAll) assumendo che il DB funzioni.
+ * Questo rende il test veloce e focalizzato esclusivamente sulla logica Java del servizio.
+ */
 
 @ExtendWith(MockitoExtension.class) // Abilita Mockito
 class ScoutingServiceTest {
 
-    // STUB creato automaticamente da Mockito (sostituisce la classe manuale)
     @Mock
     private PlayerRepository playerRepository;
 
-    // DRIVER: Il service con lo stub iniettato dentro
     @InjectMocks
     private ScoutingService scoutingService;
 

@@ -1,5 +1,11 @@
 package com.scouting.service;
 
+/**
+ * Una classe di supporto semplice che incapsula una singola richiesta di filtro statistico.
+ * Contiene tre informazioni vitali: "Su quale campo voglio filtrare?" (es. Goals), "Qual è il minimo?" e "Qual è il massimo?".
+ * La lista di questi oggetti permette all'utente di applicare combinazioni infinite di filtri.
+ */
+
 public class StatFilterCriteria {
     private String statName;
     private Double minValue;
@@ -11,7 +17,6 @@ public class StatFilterCriteria {
         this.maxValue = maxValue;
     }
 
-    // Getters
     public String getStatName() { return statName; }
     public Double getMinValue() { return minValue; }
     public Double getMaxValue() { return maxValue; }

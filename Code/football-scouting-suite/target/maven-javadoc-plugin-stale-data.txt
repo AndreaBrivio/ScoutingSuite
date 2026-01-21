@@ -1,0 +1,198 @@
+@options
+@packages
+-classpath
+'C:/Users/andre/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.1.5/spring-boot-starter-web-3.1.5.jar;C:/Users/andre/.m2/repository/org/springframework/boot/spring-boot-starter/3.1.5/spring-boot-starter-3.1.5.jar;C:/Users/andre/.m2/repository/org/springframework/boot/spring-boot/3.1.5/spring-boot-3.1.5.jar;C:/Users/andre/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.1.5/spring-boot-autoconfigure-3.1.5.jar;C:/Users/andre/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar;C:/Users/andre/.m2/repository/org/yaml/snakeyaml/1.33/snakeyaml-1.33.jar;C:/Users/andre/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.1.5/spring-boot-starter-json-3.1.5.jar;C:/Users/andre/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.15.3/jackson-databind-2.15.3.jar;C:/Users/andre/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.15.3/jackson-annotations-2.15.3.jar;C:/Users/andre/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.15.3/jackson-core-2.15.3.jar;C:/Users/andre/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.15.3/jackson-datatype-jdk8-2.15.3.jar;C:/Users/andre/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.15.3/jackson-datatype-jsr310-2.15.3.jar;C:/Users/andre/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.15.3/jackson-module-parameter-names-2.15.3.jar;C:/Users/andre/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.1.5/spring-boot-starter-tomcat-3.1.5.jar;C:/Users/andre/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.15/tomcat-embed-core-10.1.15.jar;C:/Users/andre/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.15/tomcat-embed-el-10.1.15.jar;C:/Users/andre/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.15/tomcat-embed-websocket-10.1.15.jar;C:/Users/andre/.m2/repository/org/springframework/spring-web/6.0.13/spring-web-6.0.13.jar;C:/Users/andre/.m2/repository/org/springframework/spring-beans/6.0.13/spring-beans-6.0.13.jar;C:/Users/andre/.m2/repository/io/micrometer/micrometer-observation/1.11.5/micrometer-observation-1.11.5.jar;C:/Users/andre/.m2/repository/io/micrometer/micrometer-commons/1.11.5/micrometer-commons-1.11.5.jar;C:/Users/andre/.m2/repository/org/springframework/spring-webmvc/6.0.13/spring-webmvc-6.0.13.jar;C:/Users/andre/.m2/repository/org/springframework/spring-aop/6.0.13/spring-aop-6.0.13.jar;C:/Users/andre/.m2/repository/org/springframework/spring-context/6.0.13/spring-context-6.0.13.jar;C:/Users/andre/.m2/repository/org/springframework/spring-expression/6.0.13/spring-expression-6.0.13.jar;C:/Users/andre/.m2/repository/org/springframework/boot/spring-boot-starter-data-jpa/3.1.5/spring-boot-starter-data-jpa-3.1.5.jar;C:/Users/andre/.m2/repository/org/springframework/boot/spring-boot-starter-aop/3.1.5/spring-boot-starter-aop-3.1.5.jar;C:/Users/andre/.m2/repository/org/aspectj/aspectjweaver/1.9.20/aspectjweaver-1.9.20.jar;C:/Users/andre/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/3.1.5/spring-boot-starter-jdbc-3.1.5.jar;C:/Users/andre/.m2/repository/com/zaxxer/HikariCP/5.0.1/HikariCP-5.0.1.jar;C:/Users/andre/.m2/repository/org/springframework/spring-jdbc/6.0.13/spring-jdbc-6.0.13.jar;C:/Users/andre/.m2/repository/org/hibernate/orm/hibernate-core/6.2.13.Final/hibernate-core-6.2.13.Final.jar;C:/Users/andre/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar;C:/Users/andre/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar;C:/Users/andre/.m2/repository/org/jboss/logging/jboss-logging/3.5.3.Final/jboss-logging-3.5.3.Final.jar;C:/Users/andre/.m2/repository/com/fasterxml/classmate/1.5.1/classmate-1.5.1.jar;C:/Users/andre/.m2/repository/org/antlr/antlr4-runtime/4.10.1/antlr4-runtime-4.10.1.jar;C:/Users/andre/.m2/repository/org/springframework/data/spring-data-jpa/3.1.5/spring-data-jpa-3.1.5.jar;C:/Users/andre/.m2/repository/org/springframework/data/spring-data-commons/3.1.5/spring-data-commons-3.1.5.jar;C:/Users/andre/.m2/repository/org/springframework/spring-orm/6.0.13/spring-orm-6.0.13.jar;C:/Users/andre/.m2/repository/org/springframework/spring-tx/6.0.13/spring-tx-6.0.13.jar;C:/Users/andre/.m2/repository/org/springframework/spring-aspects/6.0.13/spring-aspects-6.0.13.jar;C:/Users/andre/.m2/repository/org/springframework/boot/spring-boot-starter-log4j2/3.1.5/spring-boot-starter-log4j2-3.1.5.jar;C:/Users/andre/.m2/repository/org/apache/logging/log4j/log4j-slf4j2-impl/2.20.0/log4j-slf4j2-impl-2.20.0.jar;C:/Users/andre/.m2/repository/org/apache/logging/log4j/log4j-api/2.20.0/log4j-api-2.20.0.jar;C:/Users/andre/.m2/repository/org/apache/logging/log4j/log4j-core/2.20.0/log4j-core-2.20.0.jar;C:/Users/andre/.m2/repository/org/apache/logging/log4j/log4j-jul/2.20.0/log4j-jul-2.20.0.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-spring-boot-starter/24.2.5/vaadin-spring-boot-starter-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-spring/24.2.4/vaadin-spring-24.2.4.jar;C:/Users/andre/.m2/repository/com/vaadin/flow-server/24.2.4/flow-server-24.2.4.jar;C:/Users/andre/.m2/repository/com/vaadin/servletdetector/throw-if-servlet3/1.0.2/throw-if-servlet3-1.0.2.jar;C:/Users/andre/.m2/repository/com/vaadin/external/gwt/gwt-elemental/2.8.2.vaadin2/gwt-elemental-2.8.2.vaadin2.jar;C:/Users/andre/.m2/repository/org/apache/commons/commons-fileupload2-jakarta/2.0.0-M1/commons-fileupload2-jakarta-2.0.0-M1.jar;C:/Users/andre/.m2/repository/org/apache/commons/commons-fileupload2-core/2.0.0-M1/commons-fileupload2-core-2.0.0-M1.jar;C:/Users/andre/.m2/repository/commons-io/commons-io/2.13.0/commons-io-2.13.0.jar;C:/Users/andre/.m2/repository/org/jsoup/jsoup/1.16.1/jsoup-1.16.1.jar;C:/Users/andre/.m2/repository/com/helger/ph-css/7.0.1/ph-css-7.0.1.jar;C:/Users/andre/.m2/repository/com/helger/commons/ph-commons/11.1.0/ph-commons-11.1.0.jar;C:/Users/andre/.m2/repository/org/ow2/asm/asm/9.5/asm-9.5.jar;C:/Users/andre/.m2/repository/com/vaadin/external/gentyref/1.2.0.vaadin1/gentyref-1.2.0.vaadin1.jar;C:/Users/andre/.m2/repository/org/apache/commons/commons-compress/1.24.0/commons-compress-1.24.0.jar;C:/Users/andre/.m2/repository/com/vaadin/flow-push/24.2.4/flow-push-24.2.4.jar;C:/Users/andre/.m2/repository/com/vaadin/external/atmosphere/atmosphere-runtime/3.0.3.slf4jvaadin2/atmosphere-runtime-3.0.3.slf4jvaadin2.jar;C:/Users/andre/.m2/repository/com/vaadin/flow-client/24.2.4/flow-client-24.2.4.jar;C:/Users/andre/.m2/repository/org/springframework/spring-websocket/6.0.13/spring-websocket-6.0.13.jar;C:/Users/andre/.m2/repository/org/hibernate/validator/hibernate-validator/8.0.1.Final/hibernate-validator-8.0.1.Final.jar;C:/Users/andre/.m2/repository/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar;C:/Users/andre/.m2/repository/org/reflections/reflections/0.10.2/reflections-0.10.2.jar;C:/Users/andre/.m2/repository/org/javassist/javassist/3.28.0-GA/javassist-3.28.0-GA.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-core/24.2.5/vaadin-core-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-core-internal/24.2.5/vaadin-core-internal-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/flow-lit-template/24.2.4/flow-lit-template-24.2.4.jar;C:/Users/andre/.m2/repository/com/vaadin/flow-html-components/24.2.4/flow-html-components-24.2.4.jar;C:/Users/andre/.m2/repository/com/vaadin/flow-data/24.2.4/flow-data-24.2.4.jar;C:/Users/andre/.m2/repository/com/vaadin/flow-dnd/24.2.4/flow-dnd-24.2.4.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-lumo-theme/24.2.5/vaadin-lumo-theme-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-material-theme/24.2.5/vaadin-material-theme-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-accordion-flow/24.2.5/vaadin-accordion-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-avatar-flow/24.2.5/vaadin-avatar-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-flow-components-base/24.2.5/vaadin-flow-components-base-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-button-flow/24.2.5/vaadin-button-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-checkbox-flow/24.2.5/vaadin-checkbox-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-combo-box-flow/24.2.5/vaadin-combo-box-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-confirm-dialog-flow/24.2.5/vaadin-confirm-dialog-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-custom-field-flow/24.2.5/vaadin-custom-field-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-date-picker-flow/24.2.5/vaadin-date-picker-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-date-time-picker-flow/24.2.5/vaadin-date-time-picker-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-details-flow/24.2.5/vaadin-details-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-time-picker-flow/24.2.5/vaadin-time-picker-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-select-flow/24.2.5/vaadin-select-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-side-nav-flow/24.2.5/vaadin-side-nav-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-dialog-flow/24.2.5/vaadin-dialog-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-form-layout-flow/24.2.5/vaadin-form-layout-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-field-highlighter-flow/24.2.5/vaadin-field-highlighter-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-grid-flow/24.2.5/vaadin-grid-flow-24.2.5.jar;C:/Users/andre/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-icons-flow/24.2.5/vaadin-icons-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-virtual-list-flow/24.2.5/vaadin-virtual-list-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-list-box-flow/24.2.5/vaadin-list-box-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-login-flow/24.2.5/vaadin-login-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-messages-flow/24.2.5/vaadin-messages-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-ordered-layout-flow/24.2.5/vaadin-ordered-layout-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-progress-bar-flow/24.2.5/vaadin-progress-bar-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-radio-button-flow/24.2.5/vaadin-radio-button-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-renderer-flow/24.2.5/vaadin-renderer-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-split-layout-flow/24.2.5/vaadin-split-layout-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-tabs-flow/24.2.5/vaadin-tabs-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-text-field-flow/24.2.5/vaadin-text-field-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-upload-flow/24.2.5/vaadin-upload-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-notification-flow/24.2.5/vaadin-notification-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-app-layout-flow/24.2.5/vaadin-app-layout-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-context-menu-flow/24.2.5/vaadin-context-menu-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-menu-bar-flow/24.2.5/vaadin-menu-bar-flow-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-dev/24.2.5/vaadin-dev-24.2.5.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-dev-server/24.2.4/vaadin-dev-server-24.2.4.jar;C:/Users/andre/.m2/repository/com/vaadin/license-checker/1.12.3/license-checker-1.12.3.jar;C:/Users/andre/.m2/repository/com/github/oshi/oshi-core/6.4.1/oshi-core-6.4.1.jar;C:/Users/andre/.m2/repository/net/java/dev/jna/jna/5.13.0/jna-5.13.0.jar;C:/Users/andre/.m2/repository/net/java/dev/jna/jna-platform/5.13.0/jna-platform-5.13.0.jar;C:/Users/andre/.m2/repository/com/nimbusds/nimbus-jose-jwt/9.31/nimbus-jose-jwt-9.31.jar;C:/Users/andre/.m2/repository/org/lucee/jcip-annotations/1.0.0/jcip-annotations-1.0.0.jar;C:/Users/andre/.m2/repository/com/vaadin/open/8.5.0/open-8.5.0.jar;C:/Users/andre/.m2/repository/com/github/javaparser/javaparser-core/3.25.5/javaparser-core-3.25.5.jar;C:/Users/andre/.m2/repository/io/methvin/directory-watcher/0.18.0/directory-watcher-0.18.0.jar;C:/Users/andre/.m2/repository/com/vaadin/vaadin-dev-bundle/24.2.5/vaadin-dev-bundle-24.2.5.jar;C:/Users/andre/.m2/repository/tech/tablesaw/tablesaw-core/0.43.1/tablesaw-core-0.43.1.jar;C:/Users/andre/.m2/repository/com/google/guava/guava/30.0-jre/guava-30.0-jre.jar;C:/Users/andre/.m2/repository/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar;C:/Users/andre/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:/Users/andre/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar;C:/Users/andre/.m2/repository/org/checkerframework/checker-qual/3.5.0/checker-qual-3.5.0.jar;C:/Users/andre/.m2/repository/com/google/errorprone/error_prone_annotations/2.3.4/error_prone_annotations-2.3.4.jar;C:/Users/andre/.m2/repository/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar;C:/Users/andre/.m2/repository/org/apache/commons/commons-math3/3.6.1/commons-math3-3.6.1.jar;C:/Users/andre/.m2/repository/it/unimi/dsi/fastutil/8.3.0/fastutil-8.3.0.jar;C:/Users/andre/.m2/repository/org/roaringbitmap/RoaringBitmap/0.9.25/RoaringBitmap-0.9.25.jar;C:/Users/andre/.m2/repository/com/univocity/univocity-parsers/2.8.4/univocity-parsers-2.8.4.jar;C:/Users/andre/.m2/repository/com/ibm/icu/icu4j/65.1/icu4j-65.1.jar;C:/Users/andre/.m2/repository/io/github/classgraph/classgraph/4.8.60/classgraph-4.8.60.jar;C:/Users/andre/.m2/repository/org/slf4j/slf4j-api/2.0.9/slf4j-api-2.0.9.jar;C:/Users/andre/.m2/repository/org/springframework/spring-core/6.0.13/spring-core-6.0.13.jar;C:/Users/andre/.m2/repository/org/springframework/spring-jcl/6.0.13/spring-jcl-6.0.13.jar'
+-encoding
+'UTF-8'
+-protected
+--release
+17
+-sourcepath
+'C:/Users/andre/OneDrive/Desktop/Eclipse Workspace/football-scouting-suite/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2026. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/andre/OneDrive/Desktop/Eclipse Workspace/football-scouting-suite/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'FootballScoutingSuite-Project 1.0.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'FootballScoutingSuite-Project 1.0.0-SNAPSHOT API'
+com.scouting
+com.scouting.config
+com.scouting.data.model
+com.scouting.data.repository
+com.scouting.service
+com.scouting.service.specification
+com.scouting.service.specification.strategy
+com.scouting.ui
+C:\Users\andre\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.1.5\spring-boot-starter-web-3.1.5.jar = 1762458260043
+C:\Users\andre\.m2\repository\org\springframework\boot\spring-boot-starter\3.1.5\spring-boot-starter-3.1.5.jar = 1762458262927
+C:\Users\andre\.m2\repository\org\springframework\boot\spring-boot\3.1.5\spring-boot-3.1.5.jar = 1762458264015
+C:\Users\andre\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.1.5\spring-boot-autoconfigure-3.1.5.jar = 1762458264098
+C:\Users\andre\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar = 1762452138001
+C:\Users\andre\.m2\repository\org\yaml\snakeyaml\1.33\snakeyaml-1.33.jar = 1762458264222
+C:\Users\andre\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.1.5\spring-boot-starter-json-3.1.5.jar = 1762458260156
+C:\Users\andre\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.3\jackson-databind-2.15.3.jar = 1762458254389
+C:\Users\andre\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.3\jackson-annotations-2.15.3.jar = 1762458253437
+C:\Users\andre\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.3\jackson-core-2.15.3.jar = 1762458253586
+C:\Users\andre\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.3\jackson-datatype-jdk8-2.15.3.jar = 1762458260849
+C:\Users\andre\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.3\jackson-datatype-jsr310-2.15.3.jar = 1762458253648
+C:\Users\andre\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.3\jackson-module-parameter-names-2.15.3.jar = 1762458260568
+C:\Users\andre\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.1.5\spring-boot-starter-tomcat-3.1.5.jar = 1762458260706
+C:\Users\andre\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.15\tomcat-embed-core-10.1.15.jar = 1762458262900
+C:\Users\andre\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.15\tomcat-embed-el-10.1.15.jar = 1762458261104
+C:\Users\andre\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.15\tomcat-embed-websocket-10.1.15.jar = 1762458261307
+C:\Users\andre\.m2\repository\org\springframework\spring-web\6.0.13\spring-web-6.0.13.jar = 1762458262973
+C:\Users\andre\.m2\repository\org\springframework\spring-beans\6.0.13\spring-beans-6.0.13.jar = 1762458252691
+C:\Users\andre\.m2\repository\io\micrometer\micrometer-observation\1.11.5\micrometer-observation-1.11.5.jar = 1762458261255
+C:\Users\andre\.m2\repository\io\micrometer\micrometer-commons\1.11.5\micrometer-commons-1.11.5.jar = 1762458261982
+C:\Users\andre\.m2\repository\org\springframework\spring-webmvc\6.0.13\spring-webmvc-6.0.13.jar = 1762458255367
+C:\Users\andre\.m2\repository\org\springframework\spring-aop\6.0.13\spring-aop-6.0.13.jar = 1762458249582
+C:\Users\andre\.m2\repository\org\springframework\spring-context\6.0.13\spring-context-6.0.13.jar = 1762458252860
+C:\Users\andre\.m2\repository\org\springframework\spring-expression\6.0.13\spring-expression-6.0.13.jar = 1762458251907
+C:\Users\andre\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.1.5\spring-boot-starter-data-jpa-3.1.5.jar = 1762458249152
+C:\Users\andre\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.1.5\spring-boot-starter-aop-3.1.5.jar = 1762458249250
+C:\Users\andre\.m2\repository\org\aspectj\aspectjweaver\1.9.20\aspectjweaver-1.9.20.jar = 1762458250729
+C:\Users\andre\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.1.5\spring-boot-starter-jdbc-3.1.5.jar = 1762458249316
+C:\Users\andre\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar = 1762452116823
+C:\Users\andre\.m2\repository\org\springframework\spring-jdbc\6.0.13\spring-jdbc-6.0.13.jar = 1762458250339
+C:\Users\andre\.m2\repository\org\hibernate\orm\hibernate-core\6.2.13.Final\hibernate-core-6.2.13.Final.jar = 1762458255256
+C:\Users\andre\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar = 1762452118045
+C:\Users\andre\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar = 1762452118499
+C:\Users\andre\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar = 1762452118741
+C:\Users\andre\.m2\repository\com\fasterxml\classmate\1.5.1\classmate-1.5.1.jar = 1762458249857
+C:\Users\andre\.m2\repository\org\antlr\antlr4-runtime\4.10.1\antlr4-runtime-4.10.1.jar = 1762458251596
+C:\Users\andre\.m2\repository\org\springframework\data\spring-data-jpa\3.1.5\spring-data-jpa-3.1.5.jar = 1762458251544
+C:\Users\andre\.m2\repository\org\springframework\data\spring-data-commons\3.1.5\spring-data-commons-3.1.5.jar = 1762458252262
+C:\Users\andre\.m2\repository\org\springframework\spring-orm\6.0.13\spring-orm-6.0.13.jar = 1762458251431
+C:\Users\andre\.m2\repository\org\springframework\spring-tx\6.0.13\spring-tx-6.0.13.jar = 1762458251946
+C:\Users\andre\.m2\repository\org\springframework\spring-aspects\6.0.13\spring-aspects-6.0.13.jar = 1762458252686
+C:\Users\andre\.m2\repository\org\springframework\boot\spring-boot-starter-log4j2\3.1.5\spring-boot-starter-log4j2-3.1.5.jar = 1762458261603
+C:\Users\andre\.m2\repository\org\apache\logging\log4j\log4j-slf4j2-impl\2.20.0\log4j-slf4j2-impl-2.20.0.jar = 1762458261972
+C:\Users\andre\.m2\repository\org\apache\logging\log4j\log4j-api\2.20.0\log4j-api-2.20.0.jar = 1762458262476
+C:\Users\andre\.m2\repository\org\apache\logging\log4j\log4j-core\2.20.0\log4j-core-2.20.0.jar = 1762458264009
+C:\Users\andre\.m2\repository\org\apache\logging\log4j\log4j-jul\2.20.0\log4j-jul-2.20.0.jar = 1762458262967
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-spring-boot-starter\24.2.5\vaadin-spring-boot-starter-24.2.5.jar = 1762458252415
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-spring\24.2.4\vaadin-spring-24.2.4.jar = 1762458252732
+C:\Users\andre\.m2\repository\com\vaadin\flow-server\24.2.4\flow-server-24.2.4.jar = 1762458254493
+C:\Users\andre\.m2\repository\com\vaadin\servletdetector\throw-if-servlet3\1.0.2\throw-if-servlet3-1.0.2.jar = 1762452095303
+C:\Users\andre\.m2\repository\com\vaadin\external\gwt\gwt-elemental\2.8.2.vaadin2\gwt-elemental-2.8.2.vaadin2.jar = 1762452096181
+C:\Users\andre\.m2\repository\org\apache\commons\commons-fileupload2-jakarta\2.0.0-M1\commons-fileupload2-jakarta-2.0.0-M1.jar = 1762452095536
+C:\Users\andre\.m2\repository\org\apache\commons\commons-fileupload2-core\2.0.0-M1\commons-fileupload2-core-2.0.0-M1.jar = 1762452095469
+C:\Users\andre\.m2\repository\commons-io\commons-io\2.13.0\commons-io-2.13.0.jar = 1762458253240
+C:\Users\andre\.m2\repository\org\jsoup\jsoup\1.16.1\jsoup-1.16.1.jar = 1762458254243
+C:\Users\andre\.m2\repository\com\helger\ph-css\7.0.1\ph-css-7.0.1.jar = 1762452097398
+C:\Users\andre\.m2\repository\com\helger\commons\ph-commons\11.1.0\ph-commons-11.1.0.jar = 1762452098379
+C:\Users\andre\.m2\repository\org\ow2\asm\asm\9.5\asm-9.5.jar = 1762458253888
+C:\Users\andre\.m2\repository\com\vaadin\external\gentyref\1.2.0.vaadin1\gentyref-1.2.0.vaadin1.jar = 1762452097311
+C:\Users\andre\.m2\repository\org\apache\commons\commons-compress\1.24.0\commons-compress-1.24.0.jar = 1762458255040
+C:\Users\andre\.m2\repository\com\vaadin\flow-push\24.2.4\flow-push-24.2.4.jar = 1762458254451
+C:\Users\andre\.m2\repository\com\vaadin\external\atmosphere\atmosphere-runtime\3.0.3.slf4jvaadin2\atmosphere-runtime-3.0.3.slf4jvaadin2.jar = 1762458255062
+C:\Users\andre\.m2\repository\com\vaadin\flow-client\24.2.4\flow-client-24.2.4.jar = 1762458254732
+C:\Users\andre\.m2\repository\org\springframework\spring-websocket\6.0.13\spring-websocket-6.0.13.jar = 1762458255288
+C:\Users\andre\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar = 1762452100544
+C:\Users\andre\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar = 1762452099163
+C:\Users\andre\.m2\repository\org\reflections\reflections\0.10.2\reflections-0.10.2.jar = 1762452099448
+C:\Users\andre\.m2\repository\org\javassist\javassist\3.28.0-GA\javassist-3.28.0-GA.jar = 1762452100680
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-core\24.2.5\vaadin-core-24.2.5.jar = 1762458255126
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-core-internal\24.2.5\vaadin-core-internal-24.2.5.jar = 1762458255200
+C:\Users\andre\.m2\repository\com\vaadin\flow-lit-template\24.2.4\flow-lit-template-24.2.4.jar = 1762458255557
+C:\Users\andre\.m2\repository\com\vaadin\flow-html-components\24.2.4\flow-html-components-24.2.4.jar = 1762458256215
+C:\Users\andre\.m2\repository\com\vaadin\flow-data\24.2.4\flow-data-24.2.4.jar = 1762458255583
+C:\Users\andre\.m2\repository\com\vaadin\flow-dnd\24.2.4\flow-dnd-24.2.4.jar = 1762458255772
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-lumo-theme\24.2.5\vaadin-lumo-theme-24.2.5.jar = 1762458255549
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-material-theme\24.2.5\vaadin-material-theme-24.2.5.jar = 1762458255659
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-accordion-flow\24.2.5\vaadin-accordion-flow-24.2.5.jar = 1762458255807
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-avatar-flow\24.2.5\vaadin-avatar-flow-24.2.5.jar = 1762458255944
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-flow-components-base\24.2.5\vaadin-flow-components-base-24.2.5.jar = 1762458256274
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-button-flow\24.2.5\vaadin-button-flow-24.2.5.jar = 1762458256201
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-checkbox-flow\24.2.5\vaadin-checkbox-flow-24.2.5.jar = 1762458256165
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-combo-box-flow\24.2.5\vaadin-combo-box-flow-24.2.5.jar = 1762458256106
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-confirm-dialog-flow\24.2.5\vaadin-confirm-dialog-flow-24.2.5.jar = 1762458256422
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-custom-field-flow\24.2.5\vaadin-custom-field-flow-24.2.5.jar = 1762458256456
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-date-picker-flow\24.2.5\vaadin-date-picker-flow-24.2.5.jar = 1762458256657
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-date-time-picker-flow\24.2.5\vaadin-date-time-picker-flow-24.2.5.jar = 1762458256633
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-details-flow\24.2.5\vaadin-details-flow-24.2.5.jar = 1762458256575
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-time-picker-flow\24.2.5\vaadin-time-picker-flow-24.2.5.jar = 1762458256891
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-select-flow\24.2.5\vaadin-select-flow-24.2.5.jar = 1762458256990
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-side-nav-flow\24.2.5\vaadin-side-nav-flow-24.2.5.jar = 1762458256906
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-dialog-flow\24.2.5\vaadin-dialog-flow-24.2.5.jar = 1762458257038
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-form-layout-flow\24.2.5\vaadin-form-layout-flow-24.2.5.jar = 1762458256937
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-field-highlighter-flow\24.2.5\vaadin-field-highlighter-flow-24.2.5.jar = 1762458257038
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-grid-flow\24.2.5\vaadin-grid-flow-24.2.5.jar = 1762458257086
+C:\Users\andre\.m2\repository\org\apache\commons\commons-lang3\3.12.0\commons-lang3-3.12.0.jar = 1614372051000
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-icons-flow\24.2.5\vaadin-icons-flow-24.2.5.jar = 1762458257300
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-virtual-list-flow\24.2.5\vaadin-virtual-list-flow-24.2.5.jar = 1762458257329
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-list-box-flow\24.2.5\vaadin-list-box-flow-24.2.5.jar = 1762458257436
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-login-flow\24.2.5\vaadin-login-flow-24.2.5.jar = 1762458257498
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-messages-flow\24.2.5\vaadin-messages-flow-24.2.5.jar = 1762458257425
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-ordered-layout-flow\24.2.5\vaadin-ordered-layout-flow-24.2.5.jar = 1762458257887
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-progress-bar-flow\24.2.5\vaadin-progress-bar-flow-24.2.5.jar = 1762458257512
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-radio-button-flow\24.2.5\vaadin-radio-button-flow-24.2.5.jar = 1762458257846
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-renderer-flow\24.2.5\vaadin-renderer-flow-24.2.5.jar = 1762458258373
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-split-layout-flow\24.2.5\vaadin-split-layout-flow-24.2.5.jar = 1762458257816
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-tabs-flow\24.2.5\vaadin-tabs-flow-24.2.5.jar = 1762458257979
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-text-field-flow\24.2.5\vaadin-text-field-flow-24.2.5.jar = 1762458257982
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-upload-flow\24.2.5\vaadin-upload-flow-24.2.5.jar = 1762458258861
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-notification-flow\24.2.5\vaadin-notification-flow-24.2.5.jar = 1762458258251
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-app-layout-flow\24.2.5\vaadin-app-layout-flow-24.2.5.jar = 1762458258283
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-context-menu-flow\24.2.5\vaadin-context-menu-flow-24.2.5.jar = 1762458258592
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-menu-bar-flow\24.2.5\vaadin-menu-bar-flow-24.2.5.jar = 1762458258659
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-dev\24.2.5\vaadin-dev-24.2.5.jar = 1762458258480
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-dev-server\24.2.4\vaadin-dev-server-24.2.4.jar = 1762458258679
+C:\Users\andre\.m2\repository\com\vaadin\license-checker\1.12.3\license-checker-1.12.3.jar = 1762458261148
+C:\Users\andre\.m2\repository\com\github\oshi\oshi-core\6.4.1\oshi-core-6.4.1.jar = 1762458259635
+C:\Users\andre\.m2\repository\net\java\dev\jna\jna\5.13.0\jna-5.13.0.jar = 1762458260222
+C:\Users\andre\.m2\repository\net\java\dev\jna\jna-platform\5.13.0\jna-platform-5.13.0.jar = 1762458259936
+C:\Users\andre\.m2\repository\com\nimbusds\nimbus-jose-jwt\9.31\nimbus-jose-jwt-9.31.jar = 1762458259949
+C:\Users\andre\.m2\repository\org\lucee\jcip-annotations\1.0.0\jcip-annotations-1.0.0.jar = 1762452105985
+C:\Users\andre\.m2\repository\com\vaadin\open\8.5.0\open-8.5.0.jar = 1762452106261
+C:\Users\andre\.m2\repository\com\github\javaparser\javaparser-core\3.25.5\javaparser-core-3.25.5.jar = 1762458261081
+C:\Users\andre\.m2\repository\io\methvin\directory-watcher\0.18.0\directory-watcher-0.18.0.jar = 1762452106471
+C:\Users\andre\.m2\repository\com\vaadin\vaadin-dev-bundle\24.2.5\vaadin-dev-bundle-24.2.5.jar = 1762458260798
+C:\Users\andre\.m2\repository\tech\tablesaw\tablesaw-core\0.43.1\tablesaw-core-0.43.1.jar = 1762452110596
+C:\Users\andre\.m2\repository\com\google\guava\guava\30.0-jre\guava-30.0-jre.jar = 1762452115473
+C:\Users\andre\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar = 1762452110277
+C:\Users\andre\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar = 1762452110277
+C:\Users\andre\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar = 1762429874149
+C:\Users\andre\.m2\repository\org\checkerframework\checker-qual\3.5.0\checker-qual-3.5.0.jar = 1762452110612
+C:\Users\andre\.m2\repository\com\google\errorprone\error_prone_annotations\2.3.4\error_prone_annotations-2.3.4.jar = 1762452110758
+C:\Users\andre\.m2\repository\com\google\j2objc\j2objc-annotations\1.3\j2objc-annotations-1.3.jar = 1762452110945
+C:\Users\andre\.m2\repository\org\apache\commons\commons-math3\3.6.1\commons-math3-3.6.1.jar = 1762429862517
+C:\Users\andre\.m2\repository\it\unimi\dsi\fastutil\8.3.0\fastutil-8.3.0.jar = 1762452145015
+C:\Users\andre\.m2\repository\org\roaringbitmap\RoaringBitmap\0.9.25\RoaringBitmap-0.9.25.jar = 1762452111387
+C:\Users\andre\.m2\repository\com\univocity\univocity-parsers\2.8.4\univocity-parsers-2.8.4.jar = 1762452113303
+C:\Users\andre\.m2\repository\com\ibm\icu\icu4j\65.1\icu4j-65.1.jar = 1762452137804
+C:\Users\andre\.m2\repository\io\github\classgraph\classgraph\4.8.60\classgraph-4.8.60.jar = 1762452115451
+C:\Users\andre\.m2\repository\org\slf4j\slf4j-api\2.0.9\slf4j-api-2.0.9.jar = 1762458261480
+C:\Users\andre\.m2\repository\org\springframework\spring-core\6.0.13\spring-core-6.0.13.jar = 1762458266307
+C:\Users\andre\.m2\repository\org\springframework\spring-jcl\6.0.13\spring-jcl-6.0.13.jar = 1762458265062
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\src\main\java = 1768921598749
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\allclasses-index.html = 1769028977003
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\allpackages-index.html = 1769028977007
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\copy.svg = 1769028977141
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\element-list = 1769028976440
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\help-doc.html = 1769028977119
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\index-all.html = 1769028977101
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\index.html = 1769028976920
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\link.svg = 1769028977145
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\member-search-index.js = 1769028977036
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\module-search-index.js = 1769028977009
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\overview-summary.html = 1769028977111
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\overview-tree.html = 1769028976908
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\package-search-index.js = 1769028977013
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\script.js = 1769028977137
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\search-page.js = 1769028977163
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\search.html = 1769028977105
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\search.js = 1769028977153
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\serialized-form.html = 1769028976681
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\stylesheet.css = 1769028977124
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\tag-search-index.js = 1769028977042
+C:\Users\andre\OneDrive\Desktop\Eclipse Workspace\football-scouting-suite\target\site\apidocs\type-search-index.js = 1769028977017
