@@ -6,7 +6,15 @@ package com.scouting.service;
 
 import com.scouting.data.model.Player;
 import com.scouting.data.repository.PlayerRepository;
+import com.scouting.service.StatFilterCriteria;
+
+import jakarta.persistence.criteria.Predicate;
+
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,4 +29,105 @@ public class ScoutingService {
     public List<Player> getAllPlayers() {
         return playerRepository.findAll();
     }
+
+    public List<Player> filterByAge(int minAge, int maxAge) {
+        return playerRepository.findByAgeBetween(minAge, maxAge);
+    }
+
+    public List<Player> filterByPosition(String position) {
+        return playerRepository.findByPosition(position);
+    }
+    
+    public List<Player> filterBySquad(String squad) {
+        return playerRepository.findBySquad(squad);
+    }
+
+    public List<Player> filterByNation(String nation) {
+        return playerRepository.findByNation(nation);
+    }
+
+    public List<Player> filterByCompetition(String competition) {
+        return playerRepository.findByCompetition(competition);
+    }
+    
+    
+    public long getTotalPlayerCount() {
+        return playerRepository.count();
+    }
+    
+    
+    public List<Player> findPlayersByCriteria(
+            Integer minAge, Integer maxAge,
+            String playerName, String squad, String comp, String nation, String position,
+            List<StatFilterCriteria> statFilters // <--- MODIFICA QUI: Accetta una lista
+        ) {
+            return playerRepository.findAll((Specification<Player>) (root, query, criteriaBuilder) -> {
+                List<Predicate> predicates = new ArrayList<>();
+
+                // --- Filtri di base (Age, Name, Squad, ecc.) rimangono uguali ---
+                if (minAge != null) {
+                    predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("age"), minAge));
+                }
+                if (maxAge != null) {
+                    predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("age"), maxAge));
+                }
+                if (playerName != null && !playerName.isEmpty()) {
+                    predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + playerName.toLowerCase() + "%"));
+                }
+                if (squad != null && !squad.isEmpty()) {
+                    predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("squad")), "%" + squad.toLowerCase() + "%"));
+                }
+                if (comp != null) {
+                    predicates.add(criteriaBuilder.equal(root.get("competition"), comp));
+                }
+                if (nation != null) {
+                    predicates.add(criteriaBuilder.equal(root.get("nation"), nation));
+                }
+                if (position != null) {
+                    predicates.add(criteriaBuilder.equal(root.get("position"), position));
+                }
+
+                // --- NUOVA LOGICA: Iterazione sui filtri statistici multipli ---
+                if (statFilters != null && !statFilters.isEmpty()) {
+                    for (StatFilterCriteria filter : statFilters) {
+                        String statName = filter.getStatName();
+                        Double minValue = filter.getMinValue();
+                        Double maxValue = filter.getMaxValue();
+
+                        if (statName != null && !statName.isEmpty() && (minValue != null || maxValue != null)) {
+                            try {
+                                Field statField = Player.class.getDeclaredField(statName);
+                                Class<?> fieldType = statField.getType();
+
+                                if (Number.class.isAssignableFrom(fieldType)) {
+                                    if (minValue != null && maxValue != null) {
+                                        if (fieldType.equals(Integer.class)) {
+                                            predicates.add(criteriaBuilder.between(root.get(statName), minValue.intValue(), maxValue.intValue()));
+                                        } else {
+                                            predicates.add(criteriaBuilder.between(root.get(statName), minValue, maxValue));
+                                        }
+                                    } else if (minValue != null) {
+                                        if (fieldType.equals(Integer.class)) {
+                                            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(statName), minValue.intValue()));
+                                        } else {
+                                            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(statName), minValue));
+                                        }
+                                    } else if (maxValue != null) {
+                                         if (fieldType.equals(Integer.class)) {
+                                            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(statName), maxValue.intValue()));
+                                        } else {
+                                            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(statName), maxValue));
+                                        }
+                                    }
+                                }
+                            } catch (NoSuchFieldException e) {
+                                System.err.println("Campo statistica non trovato: " + statName);
+                            }
+                        }
+                    }
+                }
+
+                return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+            });
+        }
 }

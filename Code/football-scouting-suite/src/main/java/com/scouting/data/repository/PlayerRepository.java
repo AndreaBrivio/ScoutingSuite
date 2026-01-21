@@ -6,9 +6,23 @@
 package com.scouting.data.repository;
 
 import com.scouting.data.model.Player;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PlayerRepository extends JpaRepository<Player, Long> {
+public interface PlayerRepository extends JpaRepository<Player, Long>, JpaSpecificationExecutor<Player> {
+
+    List<Player> findByAgeBetween(Integer minAge, Integer maxAge);
+    
+    List<Player> findByPosition(String position);
+
+    List<Player> findBySquad(String squad);
+
+    List<Player> findByNation(String nation);
+
+    List<Player> findByCompetition(String competition);
 }

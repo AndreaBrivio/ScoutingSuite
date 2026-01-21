@@ -49,7 +49,7 @@ public class DataProcessingService {
             logger.info("Loaded {} rows from CSV.", playerTable.rowCount());
             
             playerRepository.deleteAll();
-            saveToDatabase(playerTable); // Modificato per non restituire int
+            saveToDatabase(playerTable);
             
         } catch (Exception e) {
             logger.error("Error in data processing pipeline", e);
@@ -67,7 +67,7 @@ public class DataProcessingService {
     }
     
     private void saveToDatabase(Table table) {
-        List<Player> playersToSave = new ArrayList<>(); // Lista temporanea
+        List<Player> playersToSave = new ArrayList<>();
         var errors = 0;
         
         for (int i = 0; i < table.rowCount(); i++) {
