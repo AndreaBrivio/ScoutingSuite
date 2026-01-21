@@ -1,0 +1,237 @@
+<?xml version="1.0"?>
+<JDepend>
+    <Packages>
+
+        <Package name="com.scouting">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>2</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Application.java">
+                    com.scouting.Application
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>org.springframework.boot</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="com.scouting.data.model">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>1</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Player.java">
+                    com.scouting.data.model.Player
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="com.scouting.data.repository">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>0</ConcreteClasses>
+                <AbstractClasses>1</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>3</Ce>
+                <A>1</A>
+                <I>0.75</I>
+                <D>0.75</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="PlayerRepository.java">
+                    com.scouting.data.repository.PlayerRepository
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+                <Package>org.springframework.data.jpa.repository</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>com.scouting.service</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="com.scouting.service">
+            <Stats>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>4</Ce>
+                <A>0</A>
+                <I>0.8</I>
+                <D>0.2</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="ScoutingService.java">
+                    com.scouting.service.ScoutingService
+                </Class>
+                <Class sourceFile="StatFilterCriteria.java">
+                    com.scouting.service.StatFilterCriteria
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>com.scouting.data.repository</Package>
+                <Package>com.scouting.service.specification</Package>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>com.scouting.ui</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="com.scouting.service.specification">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="com.scouting.service.specification.strategy">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
+                <AbstractClasses>1</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>2</Ce>
+                <A>0.33</A>
+                <I>1</I>
+                <D>0.33</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="StatQueryStrategy.java">
+                    com.scouting.service.specification.strategy.StatQueryStrategy
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="DoubleQueryStrategy.java">
+                    com.scouting.service.specification.strategy.DoubleQueryStrategy
+                </Class>
+                <Class sourceFile="IntegerQueryStrategy.java">
+                    com.scouting.service.specification.strategy.IntegerQueryStrategy
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>jakarta.persistence.criteria</Package>
+                <Package>java.lang</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="com.scouting.ui">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>4</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="ScoutingController.java">
+                    com.scouting.ui.ScoutingController
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>com.scouting.service</Package>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+                <Package>org.apache.logging.log4j</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="jakarta.persistence.criteria">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="java.lang">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="java.util">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.apache.logging.log4j">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.springframework.boot">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.springframework.data.jpa.repository">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+    </Packages>
+
+    <Cycles>
+    </Cycles>
+</JDepend>

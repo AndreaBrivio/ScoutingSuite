@@ -9,16 +9,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.mockito.Mockito.*;
+
+/**
+ * Usiamo Mockito per simulare il Controller e verifichiamo che, quando la vista viene creata,
+ * essa chiami il controller per ottenere i dati e popoli la griglia.
+ * Utilizziamo la "Reflection" per sbirciare dentro i campi privati della vista (la Grid) e assicurarci che contenga
+ * gli elementi attesi.
+ */
 
 @ExtendWith(MockitoExtension.class)
 class MainViewTest {
 
-    // MODIFICA: Mockiamo il Controller, non più il Service direttamente
     @Mock
     private ScoutingController scoutingController;
     
@@ -29,22 +33,17 @@ class MainViewTest {
         p.setName("Totti");
         mockPlayers.add(p);
 
-        // Quando la View chiama il controller, restituiamo la lista mock
         when(scoutingController.getAllPlayers()).thenReturn(mockPlayers);
 
-        // MODIFICA: Iniettiamo il Controller nel costruttore
         MainView view = new MainView(scoutingController);
 
-        // Verifichiamo che il Controller sia stato chiamato 1 volta
         verify(scoutingController, times(1)).getAllPlayers();
 
-        // Verifichiamo (tramite Reflection perché grid è privata) che la Grid abbia i dati
         @SuppressWarnings("unchecked")
         Grid<Player> grid = (Grid<Player>) ReflectionTestUtils.getField(view, "grid");
         
         Assertions.assertNotNull(grid);
         
-        // Estraiamo i dati dalla Grid per vedere se c'è Totti
         @SuppressWarnings("unchecked")
         ListDataProvider<Player> dataProvider = (ListDataProvider<Player>) grid.getDataProvider();
         Assertions.assertEquals(1, dataProvider.getItems().size());

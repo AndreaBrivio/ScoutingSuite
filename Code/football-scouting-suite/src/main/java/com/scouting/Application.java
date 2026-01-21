@@ -7,6 +7,13 @@ package com.scouting;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * Questo è l'Entry Point dell'intera applicazione.
+ * Quando eseguiamo il programma, il metodo main avvia il framework Spring Boot.
+ * Dietro le quinte, Spring esegue la scansione di tutti i pacchetti (Component Scan) per trovare le classi
+ * annotate (come @Service, @Controller, @Repository) e instanziarle nel suo container IoC (Inversion of Control).
+ */
+
 @SpringBootApplication
 public class Application {
     public static void main(String[] args) {

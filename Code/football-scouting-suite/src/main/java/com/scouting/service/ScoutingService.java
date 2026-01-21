@@ -6,170 +6,43 @@ package com.scouting.service;
 
 import com.scouting.data.model.Player;
 import com.scouting.data.repository.PlayerRepository;
-
-// IMPORT PER LOG4J
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-// IMPORT PER JPA CRITERIA API (Risolvono Root, Path, ecc.)
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.Path;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
-import org.springframework.data.jpa.domain.Specification;
+import com.scouting.service.specification.PlayerSpecificationFactory;
 import org.springframework.stereotype.Service;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
-import com.scouting.data.repository.PlayerRepository;
-import com.scouting.service.StatFilterCriteria;
 
-import jakarta.persistence.criteria.Predicate;
-
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
+/**
+ * Questo è il centro dell'applicazione, dove risiede la logica di dominio.
+ * Il suo compito principale è orchestrare le operazioni: riceve le richieste dal Controller, interroga il Repository
+ * per i dati grezzi e utilizza la Factory delle specifiche per i filtri avanzati.
+ * <p>
+ * Abbiamo spostato la logica di creazione delle query dinamiche (i vari "if" sulle statistiche) in una classe Factory separata.
+ * Questo refactoring è stato essenziale per ridurre la <em>Cognitive Complexity</em> segnalata da SonarQube,
+ * che indicava questo metodo come troppo difficile da mantenere se avesse contenuto tutta la logica di filtraggio.
+ * Ora il servizio è snello e rispetta il principio di singola responsabilità (SRP).
+ */
 
 @Service
 public class ScoutingService {
     
-	private static final Logger logger = LogManager.getLogger(ScoutingService.class);
-	
     private final PlayerRepository playerRepository;
-    
-    public ScoutingService(PlayerRepository playerRepository) {
+    private final PlayerSpecificationFactory specificationFactory;
+
+    public ScoutingService(PlayerRepository playerRepository, PlayerSpecificationFactory specificationFactory) {
         this.playerRepository = playerRepository;
+        this.specificationFactory = specificationFactory;
     }
     
     public List<Player> getAllPlayers() {
         return playerRepository.findAll();
     }
-
-    public List<Player> filterByAge(int minAge, int maxAge) {
-        return playerRepository.findByAgeBetween(minAge, maxAge);
-    }
-
-    public List<Player> filterByPosition(String position) {
-        return playerRepository.findByPosition(position);
-    }
-    
-    public List<Player> filterBySquad(String squad) {
-        return playerRepository.findBySquad(squad);
-    }
-
-    public List<Player> filterByNation(String nation) {
-        return playerRepository.findByNation(nation);
-    }
-
-    public List<Player> filterByCompetition(String competition) {
-        return playerRepository.findByCompetition(competition);
-    }
-    
     
     public long getTotalPlayerCount() {
         return playerRepository.count();
     }
     
-    
-    
-    
- // Metodo aggiornato: accetta SOLO il request object
     public List<Player> findPlayersByCriteria(PlayerFilterRequest req) {
-        return playerRepository.findAll((Specification<Player>) (root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new ArrayList<>();
-
-            // Mappiamo i campi del DTO ai predicati JPA
-            if (req.minAge() != null) {
-                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("age"), req.minAge()));
-            }
-            if (req.maxAge() != null) {
-                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("age"), req.maxAge()));
-            }
-            if (req.name() != null && !req.name().isEmpty()) {
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + req.name().toLowerCase() + "%"));
-            }
-            if (req.squad() != null && !req.squad().isEmpty()) {
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("squad")), "%" + req.squad().toLowerCase() + "%"));
-            }
-            if (req.competition() != null) {
-                predicates.add(criteriaBuilder.equal(root.get("competition"), req.competition()));
-            }
-            if (req.nation() != null) {
-                predicates.add(criteriaBuilder.equal(root.get("nation"), req.nation()));
-            }
-            if (req.position() != null) {
-                predicates.add(criteriaBuilder.equal(root.get("position"), req.position()));
-            }
-
-            // Gestione filtri statistici (logica estratta dal record)
-            if (req.statFilters() != null && !req.statFilters().isEmpty()) {
-                for (StatFilterCriteria filter : req.statFilters()) {
-                    // ... (qui incolla la stessa logica di reflection che avevi prima) ...
-                    // Nota: useremo req.statFilters() invece della lista passata come parametro
-                    applyStatFilter(filter, root, criteriaBuilder, predicates); // Consiglio: estrai questo in un metodo privato per pulizia
-                }
-            }
-
-            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-        });
+        return playerRepository.findAll(specificationFactory.createSpecification(req));
     }
-
-    
- 
-    private void applyStatFilter(StatFilterCriteria filter, Root<Player> root, CriteriaBuilder cb, List<Predicate> predicates) {
-        String statName = filter.getStatName();
-        Double minValue = filter.getMinValue();
-        Double maxValue = filter.getMaxValue();
-
-        if (statName != null && !statName.isEmpty() && (minValue != null || maxValue != null)) {
-            try {
-                Field statField = Player.class.getDeclaredField(statName);
-                Class<?> fieldType = statField.getType();
-
-                // Controlliamo se è un numero
-                if (Number.class.isAssignableFrom(fieldType) || fieldType.equals(int.class) || fieldType.equals(double.class)) {
-                    
-                    Path<Number> path = root.get(statName);
-                    boolean isInteger = fieldType.equals(Integer.class) || fieldType.equals(int.class);
-
-                    // CASO 1: Range (Min AND Max)
-                    if (minValue != null && maxValue != null) {
-                        if (isInteger) {
-                            predicates.add(cb.between(path.as(Integer.class), minValue.intValue(), maxValue.intValue()));
-                        } else {
-                            predicates.add(cb.between(path.as(Double.class), minValue, maxValue));
-                        }
-                    } 
-                    // CASO 2: Solo Minimo (>=)
-                    else if (minValue != null) {
-                        if (isInteger) {
-                            predicates.add(cb.greaterThanOrEqualTo(path.as(Integer.class), minValue.intValue()));
-                        } else {
-                            predicates.add(cb.greaterThanOrEqualTo(path.as(Double.class), minValue));
-                        }
-                    } 
-                    // CASO 3: Solo Massimo (<=)
-                    else if (maxValue != null) {
-                        if (isInteger) {
-                            predicates.add(cb.lessThanOrEqualTo(path.as(Integer.class), maxValue.intValue()));
-                        } else {
-                            predicates.add(cb.lessThanOrEqualTo(path.as(Double.class), maxValue));
-                        }
-                    }
-                }
-            } catch (NoSuchFieldException | SecurityException e) {
-                logger.warn("Campo statistica non trovato o inaccessibile: {}", statName);
-            } catch (Exception e) {
-                logger.error("Errore generico nel filtro statistico: {}", e.getMessage());
-            }
-        }
-    }
-    
-    
 }
 
     

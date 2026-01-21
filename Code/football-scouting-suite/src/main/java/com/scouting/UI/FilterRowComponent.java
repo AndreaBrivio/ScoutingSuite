@@ -8,12 +8,18 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
-
 import java.util.Map;
 import java.util.function.Consumer;
+
+/**
+ * Questo componente custom dimostra il principio di "Composizione" nella UI.
+ * Invece di duplicare codice per ogni riga di filtro dinamico, abbiamo creato un blocco riutilizzabile
+ * che contiene un selettore (ComboBox), due campi numerici (Min/Max) e un bottone di rimozione.
+ * La classe gestisce autonomamente la propria logica grafica e notifica la vista principale tramite delle "Callback"
+ * (interfacce funzionali) quando i dati cambiano o quando la riga deve essere eliminata.
+ */
 
 public class FilterRowComponent extends HorizontalLayout {
     

@@ -3,9 +3,15 @@ package com.scouting.data.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Questo è il primo test, focalizzato sull'Entità.
+ * Verifica che i getter ed i setter funzionino come previsto. Anche se sembra banale, in progetti grandi è utile
+ * per assicurarsi che nessuno rompa l'incapsulamento o introduca una logica sbagliata nei metodi di accesso ai dati.
+ * Garantisce l'integrità dell'oggetto base del nostro dominio.
+ */
+
 class PlayerTest {
 
-    // DRIVER: Il test simula il client che usa l'oggetto Player
     @Test
     void testPlayerAttributes() {
         // Setup

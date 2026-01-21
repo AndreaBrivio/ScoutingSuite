@@ -8,12 +8,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A differenza dello unit test, questo è un test di integrazione completo del Service.
+ * Qui usiamo il database reale (H2) e il framework Spring completo. Testiamo scenari complessi come
+ * i filtri dinamici: salviamo dati veri, eseguiamo una ricerca con criteri specifici e verifichiamo i risultati.
+ * È utile per capire se la "SpecificationFactory" e le "Strategie" lavorano bene insieme al Repository.
+ * L'annotazione @Transactional assicura che dopo ogni test il DB venga pulito (Rollback).
+ */
+
 @SpringBootTest
-@Transactional // Esegue il rollback dopo ogni test per non sporcare il DB
+@Transactional
 class ScoutingServiceIntegrationTest {
 
     @Autowired
@@ -46,7 +53,6 @@ class ScoutingServiceIntegrationTest {
         List<StatFilterCriteria> filters = new ArrayList<>();
         filters.add(new StatFilterCriteria("goals", 10.0, 30.0));
 
-        // FIX: Creiamo il DTO invece di passare null singoli
         PlayerFilterRequest request = new PlayerFilterRequest(
             null, null, null, null, null, null, null, 
             filters
@@ -64,7 +70,6 @@ class ScoutingServiceIntegrationTest {
         filters.add(new StatFilterCriteria("goals", 1.0, null));
         filters.add(new StatFilterCriteria("assists", null, 5.0));
 
-        // FIX: Creiamo il DTO
         PlayerFilterRequest request = new PlayerFilterRequest(
             null, null, null, null, null, null, null, 
             filters
@@ -79,17 +84,15 @@ class ScoutingServiceIntegrationTest {
     @Test
     void testReflectionErrorHandling() {
         List<StatFilterCriteria> filters = new ArrayList<>();
-        // Testiamo un campo che non esiste per verificare che non esploda
+        
         filters.add(new StatFilterCriteria("campoInesistente", 10.0, 20.0));
 
-        // FIX: Creiamo il DTO
         PlayerFilterRequest request = new PlayerFilterRequest(
              null, null, null, null, null, null, null, filters
         );
         
         List<Player> results = scoutingService.findPlayersByCriteria(request);
         
-        // Deve ritornare tutti (2) perché il filtro invalido viene ignorato (loggato come warn)
         Assertions.assertEquals(2, results.size());
     }
 }

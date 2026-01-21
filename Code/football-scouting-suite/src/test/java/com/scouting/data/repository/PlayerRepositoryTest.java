@@ -5,16 +5,22 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
 import java.util.Optional;
 
-@DataJpaTest // Configura un database H2 in-memory reale (No Mock, No Stub)
+/**
+ * Questo è un test di integrazione per il layer dei dati (Data Access Layer).
+ * Utilizza l'annotazione @DataJpaTest che avvia un vero database H2 in memoria (non un mock).
+ * L'obiettivo è verificare che la nostra entità Player sia mappata correttamente sulle tabelle del DB e che
+ * le operazioni di salvataggio e recupero funzionino realmente. È fondamentale per garantire che l'SQL generato
+ * da Hibernate sia corretto.
+ */
+
+@DataJpaTest
 class PlayerRepositoryTest {
 
     @Autowired
     private PlayerRepository playerRepository;
 
-    // DRIVER: Verifica il salvataggio e recupero reale dal DB
     @Test
     void testSaveAndFindPlayer() {
         Player p = new Player();
