@@ -88,6 +88,26 @@
               </ownedComment>
             </transition>
             <transition xmi:type="uml:Transition" xmi:id="_QMKU8PVTEfCE4_gclfWcvQ" source="_q1qK0PVNEfCE4_gclfWcvQ" target="_snFFIPVNEfCE4_gclfWcvQ"/>
+            <transition xmi:type="uml:Transition" xmi:id="_9QQu8PY_EfCmMObPRgUKqQ" source="_EOH1wPY8EfCmMObPRgUKqQ" target="_snFFIPVNEfCE4_gclfWcvQ">
+              <ownedComment xmi:type="uml:Comment" xmi:id="_-9S4gPY_EfCmMObPRgUKqQ">
+                <body>Display updated</body>
+              </ownedComment>
+            </transition>
+            <transition xmi:type="uml:Transition" xmi:id="_B4jIsPZAEfCmMObPRgUKqQ" source="_snFFIPVNEfCE4_gclfWcvQ" target="_EOH1wPY8EfCmMObPRgUKqQ">
+              <ownedComment xmi:type="uml:Comment" xmi:id="_El4RoPZAEfCmMObPRgUKqQ">
+                <body>User changes filter</body>
+              </ownedComment>
+            </transition>
+            <transition xmi:type="uml:Transition" xmi:id="_HACm8PZAEfCmMObPRgUKqQ" source="_snFFIPVNEfCE4_gclfWcvQ" target="_gk2TYPY_EfCmMObPRgUKqQ">
+              <ownedComment xmi:type="uml:Comment" xmi:id="_KaCBkPZAEfCmMObPRgUKqQ">
+                <body>User clicks reset</body>
+              </ownedComment>
+            </transition>
+            <transition xmi:type="uml:Transition" xmi:id="_Lq7BsPZAEfCmMObPRgUKqQ" source="_gk2TYPY_EfCmMObPRgUKqQ" target="_snFFIPVNEfCE4_gclfWcvQ">
+              <ownedComment xmi:type="uml:Comment" xmi:id="_OC8B8PZAEfCmMObPRgUKqQ">
+                <body>Filters reset</body>
+              </ownedComment>
+            </transition>
             <subvertex xmi:type="uml:Pseudostate" xmi:id="_q1qK0PVNEfCE4_gclfWcvQ" name="Initial"/>
             <subvertex xmi:type="uml:State" xmi:id="_snFFIPVNEfCE4_gclfWcvQ" name="DisplayingPlayers"/>
             <subvertex xmi:type="uml:State" xmi:id="_zmu-4PVNEfCE4_gclfWcvQ" name="CustomizingColumns">
@@ -107,6 +127,52 @@
                 <subvertex xmi:type="uml:State" xmi:id="_RdSicPVPEfCE4_gclfWcvQ" name="RemovingColumns"/>
                 <subvertex xmi:type="uml:State" xmi:id="_VTafcPVPEfCE4_gclfWcvQ" name="AddingColums"/>
                 <subvertex xmi:type="uml:FinalState" xmi:id="_b-NjgPVPEfCE4_gclfWcvQ" name="FinalState"/>
+              </region>
+            </subvertex>
+            <subvertex xmi:type="uml:State" xmi:id="_EOH1wPY8EfCmMObPRgUKqQ" name="FilteringPlayers">
+              <region xmi:type="uml:Region" xmi:id="_SBL9APY8EfCmMObPRgUKqQ" name="Region1">
+                <transition xmi:type="uml:Transition" xmi:id="_NWYTYPY_EfCmMObPRgUKqQ" source="_SBPnYPY8EfCmMObPRgUKqQ" target="_TTeEQPY8EfCmMObPRgUKqQ"/>
+                <transition xmi:type="uml:Transition" xmi:id="_Og0GMPY_EfCmMObPRgUKqQ" source="_TTeEQPY8EfCmMObPRgUKqQ" target="_9JVdAPY-EfCmMObPRgUKqQ">
+                  <ownedComment xmi:type="uml:Comment" xmi:id="_SCZWkPY_EfCmMObPRgUKqQ">
+                    <body>Criteria collected</body>
+                  </ownedComment>
+                </transition>
+                <transition xmi:type="uml:Transition" xmi:id="_SnkgMPY_EfCmMObPRgUKqQ" source="_9JVdAPY-EfCmMObPRgUKqQ" target="_Col7APY_EfCmMObPRgUKqQ">
+                  <ownedComment xmi:type="uml:Comment" xmi:id="_UqgBQPY_EfCmMObPRgUKqQ">
+                    <body>QueryBuilt</body>
+                  </ownedComment>
+                </transition>
+                <transition xmi:type="uml:Transition" xmi:id="_VjCLwPY_EfCmMObPRgUKqQ" source="_Col7APY_EfCmMObPRgUKqQ" target="_JXVq8PY_EfCmMObPRgUKqQ">
+                  <ownedComment xmi:type="uml:Comment" xmi:id="_YGr0QPY_EfCmMObPRgUKqQ">
+                    <body>Results Retrieved</body>
+                  </ownedComment>
+                </transition>
+                <transition xmi:type="uml:Transition" xmi:id="_bxJ64PY_EfCmMObPRgUKqQ" source="_JXVq8PY_EfCmMObPRgUKqQ" target="_ZcphoPY_EfCmMObPRgUKqQ"/>
+                <subvertex xmi:type="uml:Pseudostate" xmi:id="_SBPnYPY8EfCmMObPRgUKqQ" name=""/>
+                <subvertex xmi:type="uml:State" xmi:id="_TTeEQPY8EfCmMObPRgUKqQ" name="CollectingCriteria"/>
+                <subvertex xmi:type="uml:State" xmi:id="_9JVdAPY-EfCmMObPRgUKqQ" name="BuildingQuery"/>
+                <subvertex xmi:type="uml:State" xmi:id="_Col7APY_EfCmMObPRgUKqQ" name="ExecutingQuery"/>
+                <subvertex xmi:type="uml:State" xmi:id="_JXVq8PY_EfCmMObPRgUKqQ" name="UpdatingDisplay"/>
+                <subvertex xmi:type="uml:FinalState" xmi:id="_ZcphoPY_EfCmMObPRgUKqQ" name="FinalState"/>
+              </region>
+            </subvertex>
+            <subvertex xmi:type="uml:State" xmi:id="_gk2TYPY_EfCmMObPRgUKqQ" name="ResettingFilters">
+              <region xmi:type="uml:Region" xmi:id="_l1sh8PY_EfCmMObPRgUKqQ" name="Region1">
+                <transition xmi:type="uml:Transition" xmi:id="_t1eb8PY_EfCmMObPRgUKqQ" source="_l1uXIPY_EfCmMObPRgUKqQ" target="_nGO8wPY_EfCmMObPRgUKqQ"/>
+                <transition xmi:type="uml:Transition" xmi:id="_uzeVQPY_EfCmMObPRgUKqQ" source="_nGO8wPY_EfCmMObPRgUKqQ" target="_pr5XcPY_EfCmMObPRgUKqQ">
+                  <ownedComment xmi:type="uml:Comment" xmi:id="_x03CoPY_EfCmMObPRgUKqQ">
+                    <body>Filters cleared</body>
+                  </ownedComment>
+                </transition>
+                <transition xmi:type="uml:Transition" xmi:id="_yvI5kPY_EfCmMObPRgUKqQ" source="_pr5XcPY_EfCmMObPRgUKqQ" target="_sS9gUPY_EfCmMObPRgUKqQ">
+                  <ownedComment xmi:type="uml:Comment" xmi:id="_1EOhoPY_EfCmMObPRgUKqQ">
+                    <body>Defaults applied</body>
+                  </ownedComment>
+                </transition>
+                <subvertex xmi:type="uml:Pseudostate" xmi:id="_l1uXIPY_EfCmMObPRgUKqQ" name="Initial"/>
+                <subvertex xmi:type="uml:State" xmi:id="_nGO8wPY_EfCmMObPRgUKqQ" name="ClearingFilters"/>
+                <subvertex xmi:type="uml:State" xmi:id="_pr5XcPY_EfCmMObPRgUKqQ" name="ApplyingDefaults"/>
+                <subvertex xmi:type="uml:FinalState" xmi:id="_sS9gUPY_EfCmMObPRgUKqQ" name="FinalState"/>
               </region>
             </subvertex>
           </region>
@@ -237,4 +303,13 @@
   <ActionLanguage:TextualRepresentation xmi:id="_a2PO0PVPEfCE4_gclfWcvQ" base_Comment="_a2OnwPVPEfCE4_gclfWcvQ" language="org.eclipse.papyrus.uml.textedit.transition.xtext.UmlTransition"/>
   <ActionLanguage:TextualRepresentation xmi:id="_gZ8H8PVPEfCE4_gclfWcvQ" base_Comment="_gZ7g4PVPEfCE4_gclfWcvQ" language="org.eclipse.papyrus.uml.textedit.transition.xtext.UmlTransition"/>
   <ActionLanguage:TextualRepresentation xmi:id="_cs-RgPVQEfCE4_gclfWcvQ" base_Comment="_cs9qcPVQEfCE4_gclfWcvQ" language="org.eclipse.papyrus.uml.textedit.transition.xtext.UmlTransition"/>
+  <ActionLanguage:TextualRepresentation xmi:id="_SCjuoPY_EfCmMObPRgUKqQ" base_Comment="_SCZWkPY_EfCmMObPRgUKqQ" language="org.eclipse.papyrus.uml.textedit.transition.xtext.UmlTransition"/>
+  <ActionLanguage:TextualRepresentation xmi:id="_UqhPYPY_EfCmMObPRgUKqQ" base_Comment="_UqgBQPY_EfCmMObPRgUKqQ" language="org.eclipse.papyrus.uml.textedit.transition.xtext.UmlTransition"/>
+  <ActionLanguage:TextualRepresentation xmi:id="_YGuQgPY_EfCmMObPRgUKqQ" base_Comment="_YGr0QPY_EfCmMObPRgUKqQ" language="org.eclipse.papyrus.uml.textedit.transition.xtext.UmlTransition"/>
+  <ActionLanguage:TextualRepresentation xmi:id="_x0430PY_EfCmMObPRgUKqQ" base_Comment="_x03CoPY_EfCmMObPRgUKqQ" language="org.eclipse.papyrus.uml.textedit.transition.xtext.UmlTransition"/>
+  <ActionLanguage:TextualRepresentation xmi:id="_1EQW0PY_EfCmMObPRgUKqQ" base_Comment="_1EOhoPY_EfCmMObPRgUKqQ" language="org.eclipse.papyrus.uml.textedit.transition.xtext.UmlTransition"/>
+  <ActionLanguage:TextualRepresentation xmi:id="_-9UtsPY_EfCmMObPRgUKqQ" base_Comment="_-9S4gPY_EfCmMObPRgUKqQ" language="org.eclipse.papyrus.uml.textedit.transition.xtext.UmlTransition"/>
+  <ActionLanguage:TextualRepresentation xmi:id="_El5fwPZAEfCmMObPRgUKqQ" base_Comment="_El4RoPZAEfCmMObPRgUKqQ" language="org.eclipse.papyrus.uml.textedit.transition.xtext.UmlTransition"/>
+  <ActionLanguage:TextualRepresentation xmi:id="_KaDPsPZAEfCmMObPRgUKqQ" base_Comment="_KaCBkPZAEfCmMObPRgUKqQ" language="org.eclipse.papyrus.uml.textedit.transition.xtext.UmlTransition"/>
+  <ActionLanguage:TextualRepresentation xmi:id="_OC93IPZAEfCmMObPRgUKqQ" base_Comment="_OC8B8PZAEfCmMObPRgUKqQ" language="org.eclipse.papyrus.uml.textedit.transition.xtext.UmlTransition"/>
 </xmi:XMI>

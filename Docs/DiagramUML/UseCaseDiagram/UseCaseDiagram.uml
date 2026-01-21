@@ -81,15 +81,29 @@
     </packagedElement>
     <packagedElement xmi:type="uml:Actor" xmi:id="_oltaEPVQEfCE4_gclfWcvQ" name="Scout/Analyst"/>
     <packagedElement xmi:type="uml:Package" xmi:id="_-toTcPVQEfCE4_gclfWcvQ" name="Football Player Scouting Suite">
-      <packagedElement xmi:type="uml:UseCase" xmi:id="_0fen8PVREfCE4_gclfWcvQ" name="Customize Visible Columns">
-        <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_03XHAPVSEfCE4_gclfWcvQ" name="ExtensionPoint1"/>
-      </packagedElement>
       <packagedElement xmi:type="uml:UseCase" xmi:id="_t037sPVSEfCE4_gclfWcvQ" name="View Player List">
-        <include xmi:type="uml:Include" xmi:id="_15FCsPVSEfCE4_gclfWcvQ" addition="_0fen8PVREfCE4_gclfWcvQ"/>
+        <include xmi:type="uml:Include" xmi:id="_p7ed0PY6EfCmMObPRgUKqQ" addition="_LqGKAPY6EfCmMObPRgUKqQ"/>
+        <include xmi:type="uml:Include" xmi:id="_r3QOAPY6EfCmMObPRgUKqQ" addition="_N6-AcPY6EfCmMObPRgUKqQ"/>
+        <include xmi:type="uml:Include" xmi:id="_s1_HIPY6EfCmMObPRgUKqQ" addition="_P9_BEPY6EfCmMObPRgUKqQ"/>
+        <include xmi:type="uml:Include" xmi:id="_vESKsPY6EfCmMObPRgUKqQ" addition="_S2vW4PY6EfCmMObPRgUKqQ"/>
+        <include xmi:type="uml:Include" xmi:id="_wNcLIPY6EfCmMObPRgUKqQ" addition="_UztZ4PY6EfCmMObPRgUKqQ"/>
+        <include xmi:type="uml:Include" xmi:id="_zCynoPY6EfCmMObPRgUKqQ" addition="_ZdBuYPY6EfCmMObPRgUKqQ"/>
+        <include xmi:type="uml:Include" xmi:id="_1U50MPY6EfCmMObPRgUKqQ" addition="_cq_fMPY6EfCmMObPRgUKqQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:UseCase" xmi:id="_xY-7oPVSEfCE4_gclfWcvQ" name="View Player Details">
         <extend xmi:type="uml:Extend" xmi:id="_03S1kPVSEfCE4_gclfWcvQ" extendedCase="_0fen8PVREfCE4_gclfWcvQ" extensionLocation="_03XHAPVSEfCE4_gclfWcvQ"/>
       </packagedElement>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_qmSK0PY5EfCmMObPRgUKqQ" name="reset filters"/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_0fen8PVREfCE4_gclfWcvQ" name="Customize Visible Columns">
+        <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_03XHAPVSEfCE4_gclfWcvQ" name="ExtensionPoint1"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_LqGKAPY6EfCmMObPRgUKqQ" name="Filter by Age Range"/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_N6-AcPY6EfCmMObPRgUKqQ" name="Search by name"/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_P9_BEPY6EfCmMObPRgUKqQ" name="Filter by competition "/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_S2vW4PY6EfCmMObPRgUKqQ" name="filter by position"/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_UztZ4PY6EfCmMObPRgUKqQ" name="filter by nation"/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_ZdBuYPY6EfCmMObPRgUKqQ" name="search by squad"/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_cq_fMPY6EfCmMObPRgUKqQ" name="Filter by statistics"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Association" xmi:id="_9JR54PVSEfCE4_gclfWcvQ" memberEnd="_9JTIAfVSEfCE4_gclfWcvQ _9JTIAvVSEfCE4_gclfWcvQ">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_9JSg8PVSEfCE4_gclfWcvQ" source="org.eclipse.papyrus">
@@ -218,6 +232,62 @@
       <message xmi:type="uml:Message" xmi:id="_c1HYgPVeEfCE4_gclfWcvQ" name="attemptOsCommandOpend()" receiveEvent="_c1X3MPVeEfCE4_gclfWcvQ" sendEvent="_c1Lp8PVeEfCE4_gclfWcvQ"/>
       <message xmi:type="uml:Message" xmi:id="_u2U7MPVeEfCE4_gclfWcvQ" name="Open URL via OS command" receiveEvent="_u2cP8PVeEfCE4_gclfWcvQ" sendEvent="_u2YlkPVeEfCE4_gclfWcvQ"/>
       <message xmi:type="uml:Message" xmi:id="_4igsoPVeEfCE4_gclfWcvQ" name="Dispaly application" messageSort="reply" receiveEvent="_4ioocPVeEfCE4_gclfWcvQ" sendEvent="_4ik-EPVeEfCE4_gclfWcvQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_6Qp8gPY6EfCmMObPRgUKqQ" memberEnd="_6QyfYPY6EfCmMObPRgUKqQ _6QzGcPY6EfCmMObPRgUKqQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_6QxRQPY6EfCmMObPRgUKqQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_6QxRQfY6EfCmMObPRgUKqQ" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_6QyfYPY6EfCmMObPRgUKqQ" name="filter by age range" type="_LqGKAPY6EfCmMObPRgUKqQ" association="_6Qp8gPY6EfCmMObPRgUKqQ"/>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_6QzGcPY6EfCmMObPRgUKqQ" name="scout/analyst" type="_oltaEPVQEfCE4_gclfWcvQ" association="_6Qp8gPY6EfCmMObPRgUKqQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_9YhsYPY6EfCmMObPRgUKqQ" memberEnd="_9YjhkPY6EfCmMObPRgUKqQ _9YjhkfY6EfCmMObPRgUKqQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_9Yi6gPY6EfCmMObPRgUKqQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_9Yi6gfY6EfCmMObPRgUKqQ" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_9YjhkPY6EfCmMObPRgUKqQ" name="search by name" type="_N6-AcPY6EfCmMObPRgUKqQ" association="_9YhsYPY6EfCmMObPRgUKqQ"/>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_9YjhkfY6EfCmMObPRgUKqQ" name="scout/analyst" type="_oltaEPVQEfCE4_gclfWcvQ" association="_9YhsYPY6EfCmMObPRgUKqQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_-2uvwPY6EfCmMObPRgUKqQ" memberEnd="_-2v94vY6EfCmMObPRgUKqQ _-2v94_Y6EfCmMObPRgUKqQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-2v94PY6EfCmMObPRgUKqQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_-2v94fY6EfCmMObPRgUKqQ" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_-2v94vY6EfCmMObPRgUKqQ" name="filter by competition " type="_P9_BEPY6EfCmMObPRgUKqQ" association="_-2uvwPY6EfCmMObPRgUKqQ"/>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_-2v94_Y6EfCmMObPRgUKqQ" type="_oltaEPVQEfCE4_gclfWcvQ" association="_-2uvwPY6EfCmMObPRgUKqQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="__0_u0PY6EfCmMObPRgUKqQ" memberEnd="__1A88vY6EfCmMObPRgUKqQ __1BkAPY6EfCmMObPRgUKqQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="__1A88PY6EfCmMObPRgUKqQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="__1A88fY6EfCmMObPRgUKqQ" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="__1A88vY6EfCmMObPRgUKqQ" name="reset filters" type="_qmSK0PY5EfCmMObPRgUKqQ" association="__0_u0PY6EfCmMObPRgUKqQ"/>
+      <ownedEnd xmi:type="uml:Property" xmi:id="__1BkAPY6EfCmMObPRgUKqQ" name="scout/analyst" type="_oltaEPVQEfCE4_gclfWcvQ" association="__0_u0PY6EfCmMObPRgUKqQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_Az5nEPY7EfCmMObPRgUKqQ" memberEnd="_Az61MvY7EfCmMObPRgUKqQ _Az61M_Y7EfCmMObPRgUKqQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Az61MPY7EfCmMObPRgUKqQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Az61MfY7EfCmMObPRgUKqQ" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_Az61MvY7EfCmMObPRgUKqQ" name="filter by position" type="_S2vW4PY6EfCmMObPRgUKqQ" association="_Az5nEPY7EfCmMObPRgUKqQ"/>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_Az61M_Y7EfCmMObPRgUKqQ" name="scout/analyst" type="_oltaEPVQEfCE4_gclfWcvQ" association="_Az5nEPY7EfCmMObPRgUKqQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_CKiC0PY7EfCmMObPRgUKqQ" memberEnd="_CKj4APY7EfCmMObPRgUKqQ _CKj4AfY7EfCmMObPRgUKqQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CKjQ8PY7EfCmMObPRgUKqQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_CKjQ8fY7EfCmMObPRgUKqQ" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_CKj4APY7EfCmMObPRgUKqQ" name="filter by nation" type="_UztZ4PY6EfCmMObPRgUKqQ" association="_CKiC0PY7EfCmMObPRgUKqQ"/>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_CKj4AfY7EfCmMObPRgUKqQ" name="scout/analyst" type="_oltaEPVQEfCE4_gclfWcvQ" association="_CKiC0PY7EfCmMObPRgUKqQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_DZWmYPY7EfCmMObPRgUKqQ" memberEnd="_DZXNcvY7EfCmMObPRgUKqQ _DZX0gPY7EfCmMObPRgUKqQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_DZXNcPY7EfCmMObPRgUKqQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_DZXNcfY7EfCmMObPRgUKqQ" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_DZXNcvY7EfCmMObPRgUKqQ" name="search by squad" type="_ZdBuYPY6EfCmMObPRgUKqQ" association="_DZWmYPY7EfCmMObPRgUKqQ"/>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_DZX0gPY7EfCmMObPRgUKqQ" type="_oltaEPVQEfCE4_gclfWcvQ" association="_DZWmYPY7EfCmMObPRgUKqQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_Hi6cwPY7EfCmMObPRgUKqQ" memberEnd="_Hi85AfY7EfCmMObPRgUKqQ _Hi9gEPY7EfCmMObPRgUKqQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Hi8R8PY7EfCmMObPRgUKqQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Hi85APY7EfCmMObPRgUKqQ" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_Hi85AfY7EfCmMObPRgUKqQ" name="filter by statistics" type="_cq_fMPY6EfCmMObPRgUKqQ" association="_Hi6cwPY7EfCmMObPRgUKqQ"/>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_Hi9gEPY7EfCmMObPRgUKqQ" type="_oltaEPVQEfCE4_gclfWcvQ" association="_Hi6cwPY7EfCmMObPRgUKqQ"/>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_3QuMEPVHEfCf29ZY9BRIPQ">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_3QzroPVHEfCf29ZY9BRIPQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
