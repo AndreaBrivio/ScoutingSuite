@@ -1,14 +1,14 @@
 com\scouting\data\repository\PlayerRepository.class
+com\scouting\UI\FilterRowComponent.class
 com\scouting\service\ScoutingService.class
 com\scouting\data\model\Player.class
 com\scouting\Application.class
-com\scouting\ui\MainView.class
 com\scouting\service\specification\strategy\StatQueryStrategy.class
-com\scouting\ui\FilterRowComponent.class
-com\scouting\ui\ScoutingController.class
 com\scouting\service\specification\strategy\IntegerQueryStrategy.class
+com\scouting\UI\MainView.class
 com\scouting\service\specification\PlayerSpecificationFactory.class
 com\scouting\service\StatFilterCriteria.class
+com\scouting\UI\ScoutingController.class
 com\scouting\service\PlayerFilterRequest.class
 com\scouting\service\DataProcessingService.class
 com\scouting\config\BrowserLauncher.class

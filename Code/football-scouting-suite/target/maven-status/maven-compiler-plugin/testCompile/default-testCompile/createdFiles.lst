@@ -1,7 +1,0 @@
-com\scouting\service\DataProcessingServiceTest.class
-com\scouting\data\repository\PlayerRepositoryTest.class
-com\scouting\service\ScoutingServiceIntegrationTest.class
-com\scouting\ScoutingApplicationTests.class
-com\scouting\service\ScoutingServiceTest.class
-com\scouting\data\model\PlayerTest.class
-com\scouting\ui\MainViewTest.class
