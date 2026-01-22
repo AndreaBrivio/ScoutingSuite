@@ -17,7 +17,7 @@ if %errorlevel% NEQ 0 (
 :: 2. Strategia di esecuzione Maven
 if exist "mvnw.cmd" (
     echo [INFO] Trovato Maven Wrapper. Avvio in corso...
-    call mvnw.cmd spring-boot:run
+    call mvn spring-boot:run -DskipTests
 ) else (
     echo [INFO] Maven Wrapper 'mvnw.cmd' non trovato.
     echo [INFO] Tentativo di utilizzo di Maven globale...
@@ -25,7 +25,7 @@ if exist "mvnw.cmd" (
     where mvn >nul 2>&1
     if %errorlevel% EQU 0 (
         echo [INFO] Maven globale trovato. Avvio in corso...
-        call mvn spring-boot:run
+        call call mvn spring-boot:run -DskipTests
     ) else (
         echo.
         echo [ERRORE FATALE]

@@ -34,7 +34,7 @@ public class BrowserLauncher {
     public void launchBrowserStrategy() {
         new Thread(() -> {
             try {
-                TimeUnit.SECONDS.sleep(2);
+                TimeUnit.SECONDS.sleep(5);
                 
                 logger.info("Tentativo di apertura automatica del browser a: {}", URL);
 
