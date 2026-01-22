@@ -56,7 +56,7 @@ Eseguire i Test Unitari e di Integrazione (JUnit 5)
 - **Per lanciare la suite completa dei test (inclusi i test con Database H2 in-memory e Mockito):**
 
 ```bash
-mvn test
+mvn clean test
 ```
 
 - **Analisi Statica del Codice (PMD):**
