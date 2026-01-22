@@ -1,0 +1,78 @@
+@startuml
+skinparam state {
+  BackgroundColor #FFF3E0
+  BorderColor #FF9800
+}
+
+title "Macchina a stati - Ciclo di vita filtro ricerca"
+
+state "Inizializzazione" as Init {
+  state "Dati non caricati" as Empty
+  state "Dati pronti" as Ready : PlayerRepository\npopolato
+}
+
+state "Ricerca" as Search {
+  state "Nessun filtro" as NoFilter : Visualizzazione completa
+  state "Filtri base applicati" as BasicFilter : Età, posizione, squadra
+  state "Filtri avanzati attivi" as AdvFilter : Statistiche + combinazioni
+  
+  [*] --> NoFilter
+  NoFilter --> BasicFilter : Imposta criteri base
+  BasicFilter --> AdvFilter : Aggiungi statistiche
+  AdvFilter --> NoFilter : Reset filtri
+  BasicFilter --> NoFilter : Reset filtri
+}
+
+state "Elaborazione" as Process {
+  state "Costruzione query" as BuildQuery : PlayerSpecificationFactory
+  state "Esecuzione DB" as ExecuteDB : PlayerRepository
+  state "Aggregazione" as Aggregate : ScoutingService
+}
+
+state "Visualizzazione" as Display {
+  state "Aggiornamento UI" as UpdateUI : MainView.refresh()
+  state "Attesa input" as WaitInput : Interazione utente
+}
+
+[*] --> Init
+Init --> Empty : Avvio applicazione
+Empty --> Ready : Caricamento CSV completato
+
+Ready --> Search
+NoFilter --> Process : Submit ricerca
+BasicFilter --> Process : Submit ricerca
+AdvFilter --> Process : Submit ricerca
+
+Process --> BuildQuery
+BuildQuery --> ExecuteDB : Specification creata
+ExecuteDB --> Aggregate : Risultati DB
+Aggregate --> Display
+
+Display --> UpdateUI
+UpdateUI --> WaitInput
+WaitInput --> Search : Nuova ricerca
+
+note right of Empty
+  **Stato iniziale:**
+  Database vuoto
+  In attesa caricamento
+  da file CSV
+end note
+
+note right of AdvFilter
+  **Stato complesso:**
+  Filtri multipli attivi
+  Combinazioni statistiche
+  Range valori numerici
+end note
+
+note left of Process
+  **Transizione automatica:**
+  Triggerata da eventi UI
+  Gestita da Spring Context
+  Pattern State implementato
+  implicitamente
+  (Sommerville - Modelli comportamentali)
+end note
+
+@enduml

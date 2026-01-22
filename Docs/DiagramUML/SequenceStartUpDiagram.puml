@@ -1,0 +1,66 @@
+@startuml
+skinparam sequence {
+  ParticipantBackgroundColor #FFF3E0
+  LifeLineBackgroundColor #FFE0B2
+}
+
+title "Sequenza di avvio dell'applicazione"
+
+actor "Sistema" as System
+participant "Application\n(Spring Boot)" as App
+participant "DataProcessingService" as DPS
+participant "PlayerRepository" as Repo
+participant "BrowserLauncher" as Browser
+participant "H2 Database" as DB
+
+System -> App : main(String[] args)
+activate App
+
+App -> App : SpringApplication.run()
+activate App
+
+App -> DPS : @EventListener(ApplicationReadyEvent)
+activate DPS
+
+DPS -> DPS : runPipeline()
+activate DPS
+
+DPS -> DPS : loadCsvData()
+DPS -> Repo : deleteAll()
+DPS -> DB : TRUNCATE TABLE player
+
+loop Per ogni riga CSV
+  DPS -> DPS : parseRow()
+  DPS -> Repo : save(player)
+  Repo -> DB : INSERT INTO player
+end
+
+DPS --> App : return
+deactivate DPS
+
+App -> Browser : @EventListener(ApplicationReadyEvent)
+activate Browser
+
+Browser -> Browser : launchBrowserStrategy()
+Browser -> System : Apertura http://localhost:8080
+
+Browser --> App : return
+deactivate Browser
+
+App --> System : return
+deactivate App
+
+note right of DPS
+  **Pattern: Observer/Event Listener**
+  Spring gestisce gli eventi
+  del ciclo di vita
+  (Sommerville - Pattern comportamentali)
+end note
+
+note over DB
+  **Database in-memory H2**
+  Utilizzato per sviluppo
+  e testing
+end note
+
+@enduml

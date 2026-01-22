@@ -1,0 +1,65 @@
+@startuml
+skinparam component {
+  BackgroundColor #F0F8FF
+  BorderColor #4682B4
+}
+
+component "UI Layer" as UI {
+  component "MainView" as MV
+  component "ScoutingController" as SC
+  component "FilterComponents" as FC
+}
+
+component "Business Layer" as BL {
+  component "ScoutingService" as SS
+  component "DataProcessingService" as DPS
+  component "SpecificationFactory" as SF
+}
+
+component "Persistence Layer" as PL {
+  component "PlayerRepository" as PR
+  component "JPA/Hibernate" as JPA
+}
+
+component "External Systems" as ES {
+  component "CSV Files" as CSV
+  component "H2 Database" as H2
+}
+
+' Connessioni
+UI --> BL : <<delegate>>
+BL --> PL : <<persist>>
+DPS --> CSV : <<import>>
+PR --> H2 : <<store>>
+
+MV --> SC : uses
+SC --> SS : calls
+SS --> PR : queries
+SS --> SF : creates
+SF --> PR : builds
+DPS --> PR : saves
+
+note top of UI
+  **Vista Architetturale 1:**
+  Presentation Layer
+  Pattern MVC implementato
+  con Vaadin Framework
+end note
+
+note right of BL
+  **Vista Architetturale 2:**
+  Business Layer
+  Separazione chiara tra
+  logica applicativa e
+  gestione dati
+end note
+
+note bottom of PL
+  **Vista Architetturale 3:**
+  Persistence Layer
+  Astrazione tramite
+  Repository Pattern
+  (Sommerville - Pattern architetturali)
+end note
+
+@enduml

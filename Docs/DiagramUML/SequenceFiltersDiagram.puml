@@ -1,0 +1,85 @@
+@startuml
+skinparam sequence {
+  ParticipantBackgroundColor #F3E5F5
+  LifeLineBackgroundColor #E1BEE7
+}
+
+title "Sequenza di applicazione filtri avanzati"
+
+actor "Utente" as User
+participant "MainView" as View
+participant "ScoutingController" as Ctrl
+participant "ScoutingService" as Service
+participant "PlayerSpecificationFactory" as Factory
+participant "PlayerRepository" as Repo
+participant "H2 Database" as DB
+
+User -> View : Imposta filtri (età, squadra, stats)
+activate View
+
+View -> View : Validazione input
+View -> Ctrl : searchPlayers(filterRequest)
+activate Ctrl
+
+Ctrl -> Ctrl : log richiesta
+Ctrl -> Service : findPlayersByCriteria(filterRequest)
+activate Service
+
+Service -> Factory : createSpecification(filterRequest)
+activate Factory
+
+Factory -> Factory : analizza StatFilterCriteria
+loop Per ogni criterio statistico
+  Factory -> Factory : buildPredicate()
+  note right
+    **Strategy Pattern:**
+    Selezione algoritmo
+    in base al tipo dato
+    (Integer, Double, String)
+  end note
+end
+
+Factory -> Service : Specification<Player>
+deactivate Factory
+
+Service -> Repo : findAll(specification)
+activate Repo
+
+Repo -> DB : SELECT * FROM player WHERE...
+activate DB
+
+DB -> DB : Esecuzione query
+DB -> Repo : ResultSet
+deactivate DB
+
+Repo -> Service : List<Player>
+deactivate Repo
+
+Service -> Ctrl : List<Player>
+deactivate Service
+
+Ctrl -> View : List<Player>
+deactivate Ctrl
+
+View -> View : Aggiornamento Grid
+View -> User : Visualizzazione risultati
+deactivate View
+
+note right of User
+  **Utente tipico:** Scout o analista
+  Ricerca giocatori per:
+  - Scouting talenti
+  - Analisi prestazioni
+  - Confronto statistico
+end note
+
+note over Factory,DB
+  **Pattern architetturale:**
+  Query Object Pattern
+  tramite JPA Specifications
+  Separa costruzione query
+  dalla sua esecuzione
+  (Sommerville - Pattern strutturali)
+end note
+
+@enduml

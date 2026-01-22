@@ -1,0 +1,61 @@
+@startuml
+skinparam defaultFontSize 10
+skinparam node {
+  BackgroundColor #E8F5E9
+  BorderColor #388E3C
+}
+skinparam arrowFontSize 8
+
+title "Communication Diagram - Filtri avanzati (layout ottimizzato)"
+
+left to right direction
+scale 0.9
+
+actor "Utente"
+node "UI Layer" as UI
+node "Controller" as Ctrl
+node "Business" as Service
+node "Factory" as Factory
+node "Repository" as Repo
+node "Database" as DB
+
+' Messaggi con posizioni assolute
+Utente -right-> UI : "1. Imposta\nfiltri"
+
+UI -down-> Ctrl : "2. Invia\nrequest"
+
+Ctrl -right-> Service : "3. findPlayersByCriteria()"
+
+Service --[#orange] Factory : "4. createSpecification()"
+Factory --[#orange] Service : "5. Specification"
+
+Service -down-> Repo : "6. findAll()"
+
+Repo -right-> DB : "7. SQL\nQuery"
+DB --[hidden] Repo
+Repo -left-> Service : "8. List<Player>"
+
+Service --[hidden] Ctrl
+Ctrl -up-> UI : "9. Aggiorna\nUI"
+UI --[hidden] Utente
+
+' Note posizionate strategicamente
+note left of Service
+  <b>ScoutingService</b>
+  Orchestrazione logica
+  Pattern Service Layer
+end note
+
+note right of Factory
+  <b>PlayerSpecificationFactory</b>
+  Costruisce query dinamiche
+  Pattern Factory + Strategy
+end note
+
+note bottom of Repo
+  <b>PlayerRepository</b>
+  Spring Data JPA
+  Pattern Repository
+end note
+
+@enduml

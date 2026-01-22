@@ -1,0 +1,57 @@
+@startuml
+skinparam package {
+  BackgroundColor #F5F5F5
+  BorderColor #666666
+}
+
+package "com.scouting" {
+  package "config" {
+    [BrowserLauncher]
+  }
+  
+  package "data" {
+    package "model" {
+      [Player]
+    }
+    
+    package "repository" {
+      [PlayerRepository]
+    }
+  }
+  
+  package "service" {
+    [ScoutingService]
+    [DataProcessingService]
+    
+    package "specification" {
+      [PlayerSpecificationFactory]
+    }
+  }
+  
+  package "ui" {
+    [MainView]
+    [ScoutingController]
+    [FilterRowComponent]
+  }
+}
+
+' Dipendenze tra package
+[PlayerRepository] --> [Player]
+[ScoutingService] --> [PlayerRepository]
+[ScoutingService] --> [PlayerSpecificationFactory]
+[ScoutingController] --> [ScoutingService]
+[MainView] --> [ScoutingController]
+[DataProcessingService] --> [PlayerRepository]
+
+note top of "com.scouting"
+  **Organizzazione modulare**
+  Segue la struttura standard
+  Spring Boot a 3 layer:
+  - Presentation
+  - Business
+  - Persistence
+  
+  (Sommerville - Organizzazione del software)
+end note
+
+@enduml

@@ -1,0 +1,82 @@
+@startuml
+title "Activity Diagram - Main User Workflow"
+caption "Football Scouting Suite"
+
+start
+
+:User launches application at http://localhost:8080;
+
+fork
+  :DataProcessingService loads CSV data to H2;
+  note right
+    ETL Pipeline
+    Season 2025-26 stats
+  end note
+fork again
+  :MainView initializes Vaadin UI components;
+  note right
+    Grid, filters, buttons
+    Column configurations
+  end note
+fork again
+  :BrowserLauncher opens browser automatically;
+end fork
+
+:Display main interface with all players;
+
+repeat
+  :User interacts with filter controls;
+  
+  if (Any filter value changed?) then (yes)
+    :MainView collects filter criteria;
+    
+    partition "Query Building Process" {
+      if (Age range set?) then (yes)
+        :Add age between(min, max) clause;
+      endif
+      
+      if (Player name search?) then (yes)
+        :Add name like %value% clause;
+      endif
+      
+      if (Squad filter?) then (yes)
+        :Add squad like %value% clause;
+      endif
+      
+      if (Competition selected?) then (yes)
+        :Add competition = value clause;
+      endif
+      
+      if (Nation selected?) then (yes)
+        :Add nation = value clause;
+      endif
+      
+      if (Position selected?) then (yes)
+        :Add position = value clause;
+      endif
+      
+      if (Statistic filters added?) then (yes)
+        :For each StatFilterCriteria;
+        :Add appropriate range clause;
+        note right
+          PlayerSpecificationFactory
+          Strategy Pattern
+        end note
+      endif
+    }
+    
+    :ScoutingService executes dynamic query;
+    :PlayerRepository returns filtered players;
+    :Update grid with new results;
+    :Update "Showing X of Y players" counter;
+  else (no)
+    :No action needed;
+  endif
+
+repeat while (User continues browsing?) is (yes)
+
+:User closes browser tab;
+
+stop
+
+@enduml

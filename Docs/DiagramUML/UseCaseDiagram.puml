@@ -1,0 +1,54 @@
+@startuml
+left to right direction
+skinparam usecase {
+  BackgroundColor #E8F5E9
+  BorderColor #4CAF50
+}
+
+actor "Scout" as Scout
+actor "Analista" as Analyst
+actor "Utente" as User
+
+rectangle "Scouting Suite" {
+  usecase "UC1: Gestione Dati Giocatori" as UC1
+  usecase "UC2: Applicazione Filtri" as UC2
+  usecase "UC3: Visualizzazione Statistiche" as UC3
+  usecase "UC4: Analisi Comparativa" as UC4
+  usecase "UC5: Importazione Dati CSV" as UC5
+  usecase "UC6: Esportazione Report" as UC6
+  usecase "UC7: Gestione Filtri Avanzati" as UC7
+  
+  UC1 .> UC5 : include
+  UC2 .> UC7 : extend
+  UC3 .> UC2 : include
+  UC4 .> UC3 : include
+}
+
+Scout --> UC1
+Scout --> UC2
+Scout --> UC3
+Scout --> UC4
+Analyst --> UC6
+User --> UC3
+User --> UC2
+
+note right of Scout
+  Attore primario: analista sportivo
+  Esperto di calcio, cerca talenti
+end note
+
+note right of UC1
+  **Requisiti Funzionali:**
+  - Caricamento dati da CSV
+  - Aggiornamento statistiche
+  - Validazione dati input
+end note
+
+note right of UC2
+  **Filtri supportati:**
+  - Età, posizione, squadra
+  - Statistiche (goals, xG, assists)
+  - Combinazioni multiple
+end note
+
+@enduml
