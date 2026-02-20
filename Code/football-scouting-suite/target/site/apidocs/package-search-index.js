@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.scouting"},{"l":"com.scouting.config"},{"l":"com.scouting.data.model"},{"l":"com.scouting.data.repository"},{"l":"com.scouting.service"},{"l":"com.scouting.service.specification"},{"l":"com.scouting.service.specification.strategy"},{"l":"com.scouting.ui"}];updateSearchResults();
